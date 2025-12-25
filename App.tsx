@@ -14,7 +14,8 @@ import {
   Target,
   BarChart3,
   Library as LibraryIcon,
-  MessageSquare
+  MessageSquare,
+  AlertTriangle
 } from 'lucide-react';
 
 const STORAGE_KEY = 'deutsch_pro_v3_lexicon';
@@ -33,6 +34,7 @@ const App: React.FC = () => {
   const [session, setSession] = useState<QuizSession | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [quizSize, setQuizSize] = useState(50);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -40,6 +42,7 @@ const App: React.FC = () => {
 
   const startQuiz = async (level: Level) => {
     setView('LOADING');
+    setErrorMessage(null);
     try {
       const excludeWords = [
         ...progress.masteredItems.map(i => i.word),
@@ -47,6 +50,11 @@ const App: React.FC = () => {
       ];
       
       const batch = await fetchQuizBatch(level, quizSize, excludeWords);
+      
+      if (!batch || batch.length === 0) {
+        throw new Error("Philologist returned empty word set. Please try again.");
+      }
+
       setSession({
         level,
         items: batch,
@@ -54,8 +62,9 @@ const App: React.FC = () => {
       });
       setCurrentIndex(0);
       setView('QUIZ');
-    } catch (e) {
+    } catch (e: any) {
       console.error("Failed to start quiz", e);
+      setErrorMessage(e.message || "Failed to connect to active vocab engine.");
       setView('HOME');
     }
   };
@@ -97,7 +106,7 @@ const App: React.FC = () => {
           <BrainCircuit className="w-10 h-10 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         </div>
         <div className="text-center animate-pulse">
-          <h2 className="text-3xl font-serif font-bold text-white mb-2">Building Level {session?.level || '...'}</h2>
+          <h2 className="text-3xl font-serif font-bold text-white mb-2">Building Level</h2>
           <p className="text-slate-400">Selecting unique items not in your Lexicon...</p>
         </div>
       </div>
@@ -108,9 +117,15 @@ const App: React.FC = () => {
     return <Lexicon progress={progress} setProgress={setProgress} onBack={() => setView('HOME')} />;
   }
 
-  if (view === 'QUIZ' && session) {
+  if (view === 'QUIZ' && session && session.items.length > 0) {
     const item = session.items[currentIndex];
     const progressPercent = ((currentIndex + 1) / session.items.length) * 100;
+
+    // Safety check for current item
+    if (!item) {
+      setView('HOME');
+      return null;
+    }
 
     return (
       <div className="min-h-screen flex flex-col p-4 md:p-8 max-w-5xl mx-auto bg-[#020617]">
@@ -171,6 +186,13 @@ const App: React.FC = () => {
       </nav>
 
       <main className="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
+        {errorMessage && (
+          <div className="mb-12 bg-red-500/10 border border-red-500/20 p-4 rounded-2xl flex items-center space-x-4 text-red-400 animate-in fade-in slide-in-from-top-4">
+            <AlertTriangle className="w-6 h-6" />
+            <p className="font-bold text-sm uppercase tracking-widest">{errorMessage}</p>
+          </div>
+        )}
+
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <header className="max-w-2xl">
             <h2 className="text-5xl font-serif font-bold text-white mb-4">Daily Mastery</h2>

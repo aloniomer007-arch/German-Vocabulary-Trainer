@@ -11,7 +11,6 @@ import {
   Loader2, 
   Sparkles, 
   Mic, 
-  MicOff,
   CheckCircle,
   AlertCircle,
   Hash
@@ -22,6 +21,9 @@ interface VocabCardProps {
 }
 
 const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
+  // Safety check: if item is missing, don't crash
+  if (!item) return null;
+
   const [showExample, setShowExample] = useState(false);
   const [playingKey, setPlayingKey] = useState<string | null>(null);
   
@@ -34,6 +36,17 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
   });
   const recognitionRef = useRef<any>(null);
 
+  // CRITICAL: Reset pronunciation results when switching items
+  useEffect(() => {
+    setIsRecording(false);
+    setTestResult({ score: 0, text: '', status: 'idle' });
+    setShowExample(false);
+    setPlayingKey(null);
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch(e) {}
+    }
+  }, [item?.id]);
+
   const genderColor = {
     der: 'text-blue-400',
     die: 'text-red-400',
@@ -41,19 +54,52 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
     none: 'text-slate-400'
   };
 
+  /**
+   * Cleans conjugation values to prevent AI hallucinations like "present3rd: isst" 
+   * or markdown artifacts like "_hat_getrunken_".
+   */
   const sanitizeConjugation = (val?: string) => {
-    if (!val || val.trim() === '' || val === '-') return '—';
-    let cleaned = val.replace(/cant find|can't find|unknown|status:|pr\.\.\.|not found|missing|\?\?/gi, '');
+    if (!val) return '—';
+    let cleaned = String(val).trim();
+    if (cleaned === '' || cleaned === '-' || cleaned === '—' || cleaned === '_') return '—';
+
+    // Remove markdown emphasis (underscores/asterisks)
+    cleaned = cleaned.replace(/[_*]/g, '');
+
+    // Remove redundant key prefixes (e.g., "present3rd: isst" -> "isst")
+    cleaned = cleaned.replace(/^(present3rd|present|past|pastParticiple|result|conjugation|word|translation|perfekt|präteritum|präsens|infinitive|infinitiv)[:.\s]+/gi, '');
+    
+    // Remove technical artifacts or error strings
+    cleaned = cleaned.replace(/cant find|can't find|unknown|status:|pr\.\.\.|not found|missing|\?\?|connection:|closed/gi, '');
+    
+    // Remove leading/trailing dots, spaces, or colons
+    cleaned = cleaned.replace(/^[.\s:]+/, '').replace(/[.\s:]+$/, '');
+    
+    // Remove any text inside parentheses (usually explanations the model adds)
     cleaned = cleaned.replace(/\(.*\)/g, '').trim();
+    
     return cleaned || '—';
   };
 
+  // Strip article from word if it's already provided in the gender field
+  const getDisplayWord = () => {
+    if (item.type === 'noun' && item.gender && item.gender !== 'none') {
+      const lowerWord = item.word.toLowerCase();
+      const article = item.gender.toLowerCase() + ' ';
+      if (lowerWord.startsWith(article)) {
+        return item.word.substring(article.length);
+      }
+    }
+    return item.word;
+  };
+
   const playPronunciation = async (textToSpeak: string, key: string) => {
-    if (playingKey) return;
+    if (playingKey || textToSpeak === '—') return;
     
     let finalSpeechText = textToSpeak;
     if (textToSpeak === item.word && item.type === 'noun' && item.gender && item.gender !== 'none') {
-      finalSpeechText = `${item.gender} ${item.word}`;
+      const display = getDisplayWord();
+      finalSpeechText = `${item.gender} ${display}`;
     }
 
     setPlayingKey(key);
@@ -100,10 +146,9 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
 
     recognition.onresult = (event: any) => {
       const speechToText = event.results[0][0].transcript.toLowerCase().replace(/[.,!?]/g, '');
-      const target = item.word.toLowerCase().replace(/[.,!?]/g, '');
+      const target = getDisplayWord().toLowerCase().replace(/[.,!?]/g, '');
       const confidence = event.results[0][0].confidence;
       
-      // Basic similarity logic
       const isMatch = speechToText.includes(target) || target.includes(speechToText);
       const score = isMatch ? Math.round(confidence * 100) : Math.round(confidence * 40);
       
@@ -157,7 +202,7 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
             className={`p-2 rounded-full transition-all ${isRecording ? 'bg-red-500 text-white animate-pulse' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'}`}
             title="Practice Pronunciation"
           >
-            {isRecording ? <Mic className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+            <Mic className="w-4 h-4" />
           </button>
         </div>
       </div>
@@ -170,7 +215,7 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
              </span>
           )}
           <h2 className="text-6xl md:text-7xl font-serif font-bold text-white tracking-tight leading-none">
-            {item.word}
+            {getDisplayWord()}
           </h2>
         </div>
         <p className="text-2xl text-slate-400 flex items-center justify-center space-x-3">
@@ -178,7 +223,6 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
           <span>{item.translation}</span>
         </p>
 
-        {/* Pronunciation Feedback UI */}
         {(isRecording || testResult.status !== 'idle') && (
           <div className="mt-8 animate-in fade-in slide-in-from-top-4 duration-300">
             <div className={`inline-flex items-center space-x-4 px-6 py-3 rounded-2xl border ${
@@ -257,19 +301,27 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
                 { label: 'Präsens', val: item.conjugation.present3rd, key: 'v2' },
                 { label: 'Präteritum', val: item.conjugation.past, key: 'v3' },
                 { label: 'Perfekt', val: item.conjugation.pastParticiple, key: 'v4' }
-              ].map((c) => (
-                <button 
-                  key={c.key}
-                  onClick={() => playPronunciation(c.val, c.key)}
-                  className={`text-center group/conj p-2 rounded-2xl transition-all ${playingKey === c.key ? 'bg-indigo-500/20' : 'hover:bg-white/5'}`}
-                >
-                  <div className="text-[9px] text-slate-500 uppercase mb-2 group-hover/conj:text-indigo-400 transition-colors">{c.label}</div>
-                  <div className="text-sm font-bold text-white truncate flex items-center justify-center space-x-1">
-                    <span>{sanitizeConjugation(c.val)}</span>
-                    {playingKey === c.key ? <Loader2 className="w-3 h-3 animate-spin text-indigo-400" /> : <Volume2 className="w-3 h-3 opacity-0 group-hover/conj:opacity-100 text-indigo-400 transition-opacity" />}
-                  </div>
-                </button>
-              ))}
+              ].map((c) => {
+                const cleanVal = sanitizeConjugation(c.val);
+                return (
+                  <button 
+                    key={c.key}
+                    disabled={cleanVal === '—'}
+                    onClick={() => playPronunciation(cleanVal, c.key)}
+                    className={`text-center group/conj p-2 rounded-2xl transition-all ${playingKey === c.key ? 'bg-indigo-500/20' : cleanVal === '—' ? 'opacity-40 cursor-default' : 'hover:bg-white/5'}`}
+                  >
+                    <div className="text-[9px] text-slate-500 uppercase mb-2 group-hover/conj:text-indigo-400 transition-colors">{c.label}</div>
+                    <div className="text-sm font-bold text-white truncate flex items-center justify-center space-x-1">
+                      <span>{cleanVal}</span>
+                      {playingKey === c.key ? (
+                        <Loader2 className="w-3 h-3 animate-spin text-indigo-400" />
+                      ) : (
+                        cleanVal !== '—' && <Volume2 className="w-3 h-3 opacity-0 group-hover/conj:opacity-100 text-indigo-400 transition-opacity" />
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
