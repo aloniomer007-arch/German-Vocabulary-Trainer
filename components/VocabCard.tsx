@@ -1,8 +1,21 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { VocabItem } from '../types';
 import { generateSpeech, decodeBase64, decodeAudioData } from '../services/geminiService';
-import { Languages, BookOpen, Quote, Eye, Volume2, Loader2, Sparkles } from 'lucide-react';
+import { 
+  Languages, 
+  BookOpen, 
+  Quote, 
+  Eye, 
+  Volume2, 
+  Loader2, 
+  Sparkles, 
+  Mic, 
+  MicOff,
+  CheckCircle,
+  AlertCircle,
+  Hash
+} from 'lucide-react';
 
 interface VocabCardProps {
   item: VocabItem;
@@ -11,6 +24,15 @@ interface VocabCardProps {
 const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
   const [showExample, setShowExample] = useState(false);
   const [playingKey, setPlayingKey] = useState<string | null>(null);
+  
+  // Pronunciation Test State
+  const [isRecording, setIsRecording] = useState(false);
+  const [testResult, setTestResult] = useState<{ score: number; text: string; status: 'idle' | 'success' | 'warning' | 'error' }>({
+    score: 0,
+    text: '',
+    status: 'idle'
+  });
+  const recognitionRef = useRef<any>(null);
 
   const genderColor = {
     der: 'text-blue-400',
@@ -23,14 +45,12 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
     if (!val || val.trim() === '' || val === '-') return '—';
     let cleaned = val.replace(/cant find|can't find|unknown|status:|pr\.\.\.|not found|missing|\?\?/gi, '');
     cleaned = cleaned.replace(/\(.*\)/g, '').trim();
-    const isError = /^(cant|can't|find|unknown|not|found|missing)$/i.test(cleaned);
-    return (cleaned && !isError) ? cleaned : '—';
+    return cleaned || '—';
   };
 
   const playPronunciation = async (textToSpeak: string, key: string) => {
     if (playingKey) return;
     
-    // Auto-include article for main word if it's a noun
     let finalSpeechText = textToSpeak;
     if (textToSpeak === item.word && item.type === 'noun' && item.gender && item.gender !== 'none') {
       finalSpeechText = `${item.gender} ${item.word}`;
@@ -58,6 +78,59 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
     }
   };
 
+  const startPronunciationTest = () => {
+    if (isRecording) {
+      recognitionRef.current?.stop();
+      return;
+    }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition is not supported in this browser.");
+      return;
+    }
+
+    setIsRecording(true);
+    setTestResult({ score: 0, text: '', status: 'idle' });
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'de-DE';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = (event: any) => {
+      const speechToText = event.results[0][0].transcript.toLowerCase().replace(/[.,!?]/g, '');
+      const target = item.word.toLowerCase().replace(/[.,!?]/g, '');
+      const confidence = event.results[0][0].confidence;
+      
+      // Basic similarity logic
+      const isMatch = speechToText.includes(target) || target.includes(speechToText);
+      const score = isMatch ? Math.round(confidence * 100) : Math.round(confidence * 40);
+      
+      let status: 'success' | 'warning' | 'error' = 'error';
+      if (score > 85) status = 'success';
+      else if (score > 60) status = 'warning';
+
+      setTestResult({
+        score,
+        text: event.results[0][0].transcript,
+        status
+      });
+    };
+
+    recognition.onerror = () => {
+      setIsRecording(false);
+      setTestResult(prev => ({ ...prev, status: 'error', text: 'Mic error' }));
+    };
+
+    recognition.onend = () => {
+      setIsRecording(false);
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
+  };
+
   return (
     <div className="w-full max-w-2xl card-gradient border border-slate-800 rounded-[40px] p-10 shadow-2xl relative overflow-hidden group">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50" />
@@ -66,7 +139,7 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
         <span className="px-4 py-1.5 bg-indigo-500/10 text-indigo-400 text-xs font-bold rounded-full border border-indigo-500/20 tracking-[0.2em] uppercase">
           {item.level} • {item.type}
         </span>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3">
           {item.isIrregular && (
             <span className="flex items-center space-x-1 text-amber-500 text-[10px] font-bold uppercase tracking-widest">
               <Sparkles className="w-3 h-3" />
@@ -76,14 +149,20 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
           <button 
             onClick={() => playPronunciation(item.word, 'main')}
             className={`p-2 rounded-full transition-all ${playingKey === 'main' ? 'bg-indigo-500 text-white animate-pulse' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'}`}
-            title="Listen to word"
           >
             {playingKey === 'main' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Volume2 className="w-4 h-4" />}
+          </button>
+          <button 
+            onClick={startPronunciationTest}
+            className={`p-2 rounded-full transition-all ${isRecording ? 'bg-red-500 text-white animate-pulse' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'}`}
+            title="Practice Pronunciation"
+          >
+            {isRecording ? <Mic className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
           </button>
         </div>
       </div>
 
-      <div className="text-center mb-16">
+      <div className="text-center mb-12">
         <div className="flex items-center justify-center space-x-4 mb-4">
           {item.type === 'noun' && item.gender && (
              <span className={`text-3xl font-serif italic opacity-40 ${genderColor[item.gender]}`}>
@@ -98,6 +177,41 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
           <Languages className="w-6 h-6 opacity-30" />
           <span>{item.translation}</span>
         </p>
+
+        {/* Pronunciation Feedback UI */}
+        {(isRecording || testResult.status !== 'idle') && (
+          <div className="mt-8 animate-in fade-in slide-in-from-top-4 duration-300">
+            <div className={`inline-flex items-center space-x-4 px-6 py-3 rounded-2xl border ${
+              isRecording ? 'bg-slate-900 border-indigo-500/30' : 
+              testResult.status === 'success' ? 'bg-emerald-500/10 border-emerald-500/30' :
+              testResult.status === 'warning' ? 'bg-amber-500/10 border-amber-500/30' : 'bg-red-500/10 border-red-500/30'
+            }`}>
+              {isRecording ? (
+                <>
+                  <div className="flex space-x-1 items-end h-4">
+                    <div className="w-1 bg-indigo-500 animate-[bounce_0.6s_infinite]" />
+                    <div className="w-1 bg-indigo-500 animate-[bounce_0.8s_infinite]" />
+                    <div className="w-1 bg-indigo-500 animate-[bounce_0.5s_infinite]" />
+                    <div className="w-1 bg-indigo-500 animate-[bounce_0.7s_infinite]" />
+                  </div>
+                  <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest">Listening...</span>
+                </>
+              ) : (
+                <>
+                  {testResult.status === 'success' ? <CheckCircle className="w-4 h-4 text-emerald-500" /> : <AlertCircle className="w-4 h-4 text-amber-500" />}
+                  <div className="flex flex-col items-start text-left">
+                    <span className={`text-[10px] font-bold uppercase tracking-widest ${
+                      testResult.status === 'success' ? 'text-emerald-500' : 'text-amber-500'
+                    }`}>
+                      Accuracy: {testResult.score}%
+                    </span>
+                    <span className="text-xs text-slate-400">Heard: "{testResult.text || '...'}"</span>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 gap-6 mb-12">
@@ -117,6 +231,20 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
                 {playingKey === 'plural' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Volume2 className="w-4 h-4" />}
               </button>
             )}
+          </div>
+        )}
+
+        {item.type === 'preposition' && item.cases && item.cases.length > 0 && (
+          <div className="bg-white/5 p-6 rounded-3xl border border-white/5 backdrop-blur-sm">
+            <h4 className="text-slate-500 text-[10px] font-bold uppercase mb-4 tracking-widest text-center">Grammatischer Kasus</h4>
+            <div className="flex flex-wrap justify-center gap-3">
+              {item.cases.map((kasus, idx) => (
+                <div key={idx} className="flex items-center space-x-2 bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-xl">
+                  <Hash className="w-3 h-3 text-indigo-400" />
+                  <span className="text-sm font-bold text-indigo-300">{kasus}</span>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 

@@ -1,5 +1,7 @@
 {
   "name": "German Vocabulary Trainer",
   "description": "Comprehensive German Active Vocabulary Trainer mapping 10,000+ words across CEFR levels A1-C2 using AI-driven batch generation.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "microphone"
+  ]
 }
