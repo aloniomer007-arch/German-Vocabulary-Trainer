@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback, useMemo } from 'react';
-import { Chess } from 'chess.js';
+import { Chess, Square } from 'chess.js';
 import PieceIcon from './PieceIcon';
 import { PieceType, Color } from '../types';
 
@@ -33,7 +33,8 @@ const Board: React.FC<BoardProps> = ({ fen, onMove, isAiThinking }) => {
 
   const validMovesForSelected = useMemo(() => {
     if (!selectedSquare) return [];
-    return game.moves({ square: selectedSquare as any, verbose: true }).map(m => m.to);
+    // Cast selectedSquare string to Square type for chess.js compatibility
+    return game.moves({ square: selectedSquare as Square, verbose: true }).map(m => m.to);
   }, [game, selectedSquare]);
 
   const handleSquareClick = (pos: string) => {
@@ -52,7 +53,8 @@ const Board: React.FC<BoardProps> = ({ fen, onMove, isAiThinking }) => {
     }
 
     // Selecting a piece
-    const piece = game.get(pos as any);
+    // Fix: Cast string pos to Square type to resolve "Argument of type 'string' is not assignable to parameter of type 'Square'"
+    const piece = game.get(pos as Square);
     if (piece && piece.color === game.turn()) {
       setSelectedSquare(pos);
     } else {

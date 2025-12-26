@@ -18,7 +18,8 @@ import {
   Plus,
   Sparkles,
   Info,
-  AlertCircle
+  AlertCircle,
+  XCircle // Added for practice pool buttons
 } from 'lucide-react';
 import { generateSpeech, decodeBase64, decodeAudioData, fetchWordDetails } from '../services/geminiService';
 import VocabCard from './VocabCard';
@@ -135,10 +136,7 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
 
       if (correct) {
         if (isAlreadyInMastered) {
-          return {
-            ...prev,
-            learningItems: prev.learningItems.filter(i => i.id !== item.id)
-          };
+          return prev; // No change needed
         }
         newStats[item.level] = (newStats[item.level] || 0) + 1;
         return {
@@ -150,18 +148,18 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
       } else {
         if (isAlreadyInMastered) {
           newStats[item.level] = Math.max(0, (newStats[item.level] || 0) - 1);
-        }
-        if (isAlreadyInLearning) {
           return {
             ...prev,
             levelStats: newStats,
-            masteredItems: prev.masteredItems.filter(i => i.id !== item.id)
+            masteredItems: prev.masteredItems.filter(i => i.id !== item.id),
+            learningItems: [item, ...prev.learningItems]
           };
+        }
+        if (isAlreadyInLearning) {
+          return prev;
         }
         return {
           ...prev,
-          levelStats: newStats,
-          masteredItems: prev.masteredItems.filter(i => i.id !== item.id),
           learningItems: [item, ...prev.learningItems]
         };
       }
@@ -239,6 +237,55 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
       };
     });
   };
+
+  // UI for the Practice Pool Review Session
+  if (isReviewing && reviewItems.length > 0) {
+    const currentItem = reviewItems[reviewIndex];
+    const progressPercent = ((reviewIndex + 1) / reviewItems.length) * 100;
+
+    return (
+      <div className="min-h-screen bg-[#020617] flex flex-col p-6 md:p-12 animate-in fade-in duration-500">
+        <header className="flex items-center justify-between mb-12 max-w-5xl mx-auto w-full">
+          <button onClick={() => setIsReviewing(false)} className="text-slate-500 hover:text-white transition-colors">
+            <X className="w-8 h-8" />
+          </button>
+          <div className="flex-1 max-w-md mx-8">
+            <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-indigo-500 transition-all duration-500" 
+                style={{ width: `${progressPercent}%` }} 
+              />
+            </div>
+          </div>
+          <div className="text-right">
+             <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Reviewing Pool</span>
+             <span className="font-mono text-white font-bold">{reviewIndex + 1} / {reviewItems.length}</span>
+          </div>
+        </header>
+
+        <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full">
+          <VocabCard item={currentItem} />
+          
+          <div className="mt-16 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 w-full max-w-2xl">
+            <button 
+              onClick={() => handleReviewAction(currentItem, false)}
+              className="flex-1 flex items-center justify-center space-x-4 px-8 py-5 bg-slate-900 border border-red-500/20 hover:border-red-500/50 text-red-400 rounded-3xl transition-all"
+            >
+              <XCircle className="w-7 h-7" />
+              <div className="text-left"><span className="block font-bold uppercase tracking-widest text-xs">Still Learning</span></div>
+            </button>
+            <button 
+              onClick={() => handleReviewAction(currentItem, true)}
+              className="flex-1 flex items-center justify-center space-x-4 px-8 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-3xl shadow-2xl transition-all"
+            >
+              <CheckCircle2 className="w-7 h-7" />
+              <div className="text-left"><span className="block font-bold uppercase tracking-widest text-xs">Mastered</span></div>
+            </button>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#020617] text-white flex flex-col relative">
@@ -338,7 +385,6 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
         </div>
       )}
 
-      {/* Main Lexicon Header and List code (remains identical to previous) */}
       <header className="px-6 py-8 border-b border-slate-800 bg-[#020617]/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-8">

@@ -17,7 +17,10 @@ function repairTruncatedJsonArray(jsonStr: string): string {
   return trimmed.substring(0, lastBraceIndex + 1) + ']';
 }
 
-export async function fetchQuizBatch(level: Level, count: number = 25, excludeWords: string[] = []): Promise<VocabItem[]> {
+/**
+ * Helper to fetch a single batch chunk from Gemini.
+ */
+async function fetchBatchChunk(level: Level, count: number, excludeWords: string[]): Promise<VocabItem[]> {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const cefrGuidelines: Record<Level, string> = {
@@ -30,23 +33,20 @@ export async function fetchQuizBatch(level: Level, count: number = 25, excludeWo
   };
 
   const exclusionString = excludeWords.length > 0 
-    ? `EXCLUSION: Do not repeat these words: ${excludeWords.slice(-100).join(', ')}.`
+    ? `EXCLUSION: Do not repeat these words: ${excludeWords.slice(-200).join(', ')}.`
     : "";
 
-  const safeCount = Math.min(count, 50);
-
-  const prompt = `Act as a German Philologist. Generate EXACTLY ${safeCount} UNIQUE German vocab items for level ${level}.
+  const prompt = `Act as a German Philologist. Generate EXACTLY ${count} UNIQUE German vocab items for level ${level}.
   
   STRICT VERB CONJUGATION MAPPING:
-  - "present3rd": MUST be the 3rd person singular present (er/sie/es). Example for 'trinken' is 'trinkt'.
-  - "past": MUST be the Präteritum (Simple Past). Example for 'trinken' is 'trank'.
-  - "pastParticiple": MUST be the Perfekt (Past Participle + auxiliary). Example for 'trinken' is 'hat getrunken'.
+  - "present3rd": MUST be the 3rd person singular present (er/sie/es). Example: 'trinkt'.
+  - "past": MUST be the Präteritum (Simple Past). Example: 'trank'.
+  - "pastParticiple": MUST be the Perfekt. Example: 'hat getrunken'.
   
-  CRITICAL FORMATTING RULES:
-  1. Use ONLY the word string.
-  2. DO NOT include keys/labels like "present:" or "past:" inside the values.
-  3. DO NOT use underscores (_) or asterisks (*).
-  4. DO NOT SWAP SLOTS. Do not put 'hat getrunken' in the "present3rd" slot.
+  CRITICAL RULES:
+  1. Use ONLY the word string. No markdown (_) or labels inside values.
+  2. For NOUNS, include "plural".
+  3. Ensure NO duplicates in this response.
 
   ${exclusionString}
   Level: ${cefrGuidelines[level]}`;
@@ -76,11 +76,10 @@ export async function fetchQuizBatch(level: Level, count: number = 25, excludeWo
               isIrregular: { type: Type.BOOLEAN },
               conjugation: {
                 type: Type.OBJECT,
-                description: "Verb conjugation forms. Strictly follow field definitions.",
                 properties: {
-                  present3rd: { type: Type.STRING, description: "3rd person singular present (e.g. trinkt)" },
-                  past: { type: Type.STRING, description: "Präteritum (e.g. trank)" },
-                  pastParticiple: { type: Type.STRING, description: "Perfekt (e.g. hat getrunken)" }
+                  present3rd: { type: Type.STRING },
+                  past: { type: Type.STRING },
+                  pastParticiple: { type: Type.STRING }
                 }
               },
               cases: { type: Type.ARRAY, items: { type: Type.STRING } }
@@ -105,9 +104,40 @@ export async function fetchQuizBatch(level: Level, count: number = 25, excludeWo
       id: Math.random().toString(36).substr(2, 9)
     }));
   } catch (e) {
-    console.error("Gemini Fetch/Parse Error:", e);
+    console.error("Gemini Chunk Fetch Error:", e);
     return [];
   }
+}
+
+/**
+ * Main fetcher with Refill Strategy to guarantee count.
+ */
+export async function fetchQuizBatch(level: Level, count: number = 25, excludeWords: string[] = []): Promise<VocabItem[]> {
+  let allItems: VocabItem[] = [];
+  const maxRetries = 3;
+  let attempts = 0;
+  
+  const currentExclusions = [...excludeWords];
+
+  while (allItems.length < count && attempts < maxRetries) {
+    attempts++;
+    const remaining = count - allItems.length;
+    // Emphasize larger chunks if we are far behind
+    const nextChunk = await fetchBatchChunk(level, remaining, currentExclusions);
+    
+    if (nextChunk.length === 0) break; // Stuck
+
+    allItems = [...allItems, ...nextChunk];
+    // Add new items to exclusions for next potential loop
+    nextChunk.forEach(item => currentExclusions.push(item.word));
+    
+    // Safety slice in case of overflow
+    if (allItems.length > count) {
+      allItems = allItems.slice(0, count);
+    }
+  }
+
+  return allItems;
 }
 
 export async function fetchWordDetails(word: string): Promise<(VocabItem & { exists: boolean }) | null> {
