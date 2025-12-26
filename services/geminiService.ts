@@ -4,52 +4,71 @@ import { VocabItem, Level, ChatMessage } from "../types";
 
 /**
  * Attempts to repair a truncated JSON array by finding the last complete object.
+ * Robust handling for unterminated strings and objects.
  */
 function repairTruncatedJsonArray(jsonStr: string): string {
-  const trimmed = jsonStr.trim();
+  let trimmed = jsonStr.trim();
+  
+  // If it's already closed, return as is
   if (trimmed.endsWith(']')) return trimmed;
   
-  // Find the last complete object closing brace before the truncation
+  // Try to find the last closing brace of a full object
   const lastBraceIndex = trimmed.lastIndexOf('}');
-  if (lastBraceIndex === -1) return '[]';
   
-  // Slice to the last brace and close the array
-  return trimmed.substring(0, lastBraceIndex + 1) + ']';
+  if (lastBraceIndex === -1) {
+    // If no object was even started, return empty array
+    return '[]';
+  }
+  
+  // Slice to the end of the last complete object and close the array
+  let repaired = trimmed.substring(0, lastBraceIndex + 1);
+  
+  // Ensure it starts with [ if it was missing for some reason
+  if (!repaired.startsWith('[')) {
+    repaired = '[' + repaired;
+  }
+  
+  return repaired + ']';
 }
 
 /**
- * Helper to fetch a single batch chunk from Gemini.
+ * Helper to fetch a single small batch chunk from Gemini.
+ * Using a very safe chunk size (8) to stay well within token limits.
  */
 async function fetchBatchChunk(level: Level, count: number, excludeWords: string[]): Promise<VocabItem[]> {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const cefrGuidelines: Record<Level, string> = {
-    A1: "Focus on absolute basics. Words like 'Haus', 'Trinken'.",
-    A2: "Elementary level. Topics: routines, simple past events.",
-    B1: "Intermediate level. Narrating experiences.",
-    B2: "Upper-intermediate level. Abstract concepts.",
-    C1: "Advanced academic/professional language.",
-    C2: "Mastery level. Highly specific synonyms."
+    A1: "Absolute basics (Haus, Hund).",
+    A2: "Elementary level (Beruf, Wetter).",
+    B1: "Intermediate level (Erfahrung, Meinung).",
+    B2: "Upper-intermediate (Abstrakt, Politik).",
+    C1: "Advanced academic (Wissenschaft, Justiz).",
+    C2: "Mastery (Nuancen, Literatur)."
   };
 
   const exclusionString = excludeWords.length > 0 
-    ? `EXCLUSION: Do not repeat these words: ${excludeWords.slice(-200).join(', ')}.`
+    ? `EXCLUDE strictly: ${excludeWords.slice(-100).join(', ')}.`
     : "";
 
-  const prompt = `Act as a German Philologist. Generate EXACTLY ${count} UNIQUE German vocab items for level ${level}.
+  // SAFETY: 8 items per call is the "sweet spot" for Gemini 3 Flash to avoid truncation.
+  const requestedCount = Math.min(count, 8);
+
+  const prompt = `Act as a German Philologist. Generate EXACTLY ${requestedCount} UNIQUE German vocab items for level ${level}.
   
-  STRICT VERB CONJUGATION MAPPING:
-  - "present3rd": MUST be the 3rd person singular present (er/sie/es). Example: 'trinkt'.
-  - "past": MUST be the Präteritum (Simple Past). Example: 'trank'.
-  - "pastParticiple": MUST be the Perfekt. Example: 'hat getrunken'.
+  STRICT VERB RULES:
+  If type is 'verb', the 'conjugation' object MUST contain:
+  - "present3rd": 3rd person singular present
+  - "past": Präteritum
+  - "pastParticiple": Perfekt with auxiliary
   
-  CRITICAL RULES:
-  1. Use ONLY the word string. No markdown (_) or labels inside values.
-  2. For NOUNS, include "plural".
-  3. Ensure NO duplicates in this response.
+  CRITICAL FORMATTING:
+  1. No markdown.
+  2. NOUNS must have "plural" and "gender".
+  3. No duplicates.
 
   ${exclusionString}
-  Level: ${cefrGuidelines[level]}`;
+  Level: ${level} (${cefrGuidelines[level]})`;
 
   try {
     const response = await ai.models.generateContent({
@@ -58,7 +77,7 @@ async function fetchBatchChunk(level: Level, count: number, excludeWords: string
       config: {
         responseMimeType: "application/json",
         thinkingConfig: { thinkingBudget: 0 },
-        maxOutputTokens: 8192,
+        maxOutputTokens: 8192, // High limit to ensure we never truncate naturally
         responseSchema: {
           type: Type.ARRAY,
           items: {
@@ -89,20 +108,29 @@ async function fetchBatchChunk(level: Level, count: number, excludeWords: string
       },
     });
 
-    let text = response.text || '[]';
-    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    let text = (response.text || '[]').trim();
     
+    // Cleanup markdown if present
+    text = text.replace(/^```json\s*/, '').replace(/\s*```$/, '').trim();
+    
+    // Repair if truncated
     if (!text.endsWith(']')) {
       text = repairTruncatedJsonArray(text);
     }
 
-    const data = JSON.parse(text);
-    if (!Array.isArray(data)) return [];
+    try {
+      const data = JSON.parse(text);
+      if (!Array.isArray(data)) return [];
 
-    return data.map((item: any) => ({
-      ...item,
-      id: Math.random().toString(36).substr(2, 9)
-    }));
+      return data.map((item: any) => ({
+        ...item,
+        conjugation: item.type === 'verb' ? (item.conjugation || { present3rd: '', past: '', pastParticiple: '' }) : item.conjugation,
+        id: Math.random().toString(36).substr(2, 9)
+      }));
+    } catch (parseError) {
+      console.warn("JSON Parse failed after repair, returning empty chunk.", parseError);
+      return [];
+    }
   } catch (e) {
     console.error("Gemini Chunk Fetch Error:", e);
     return [];
@@ -110,28 +138,34 @@ async function fetchBatchChunk(level: Level, count: number, excludeWords: string
 }
 
 /**
- * Main fetcher with Refill Strategy to guarantee count.
+ * Main fetcher with high-frequency retry/looping to guarantee the requested count.
  */
 export async function fetchQuizBatch(level: Level, count: number = 25, excludeWords: string[] = []): Promise<VocabItem[]> {
   let allItems: VocabItem[] = [];
-  const maxRetries = 3;
-  let attempts = 0;
-  
+  const maxLoops = 25; // Enough loops to reach 100 with chunks of 8
+  let loops = 0;
   const currentExclusions = [...excludeWords];
 
-  while (allItems.length < count && attempts < maxRetries) {
-    attempts++;
-    const remaining = count - allItems.length;
-    // Emphasize larger chunks if we are far behind
-    const nextChunk = await fetchBatchChunk(level, remaining, currentExclusions);
+  while (allItems.length < count && loops < maxLoops) {
+    loops++;
+    const remainingNeeded = count - allItems.length;
     
-    if (nextChunk.length === 0) break; // Stuck
+    const nextChunk = await fetchBatchChunk(level, remainingNeeded, currentExclusions);
+    
+    if (nextChunk.length === 0) {
+      // Small cooldown before retry
+      await new Promise(r => setTimeout(r, 400));
+      continue;
+    }
 
-    allItems = [...allItems, ...nextChunk];
-    // Add new items to exclusions for next potential loop
-    nextChunk.forEach(item => currentExclusions.push(item.word));
+    // Filter duplicates
+    const uniqueFromChunk = nextChunk.filter(item => 
+      !allItems.some(existing => existing.word.toLowerCase() === item.word.toLowerCase())
+    );
+
+    allItems = [...allItems, ...uniqueFromChunk];
+    uniqueFromChunk.forEach(item => currentExclusions.push(item.word));
     
-    // Safety slice in case of overflow
     if (allItems.length > count) {
       allItems = allItems.slice(0, count);
     }
@@ -142,8 +176,7 @@ export async function fetchQuizBatch(level: Level, count: number = 25, excludeWo
 
 export async function fetchWordDetails(word: string): Promise<(VocabItem & { exists: boolean }) | null> {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  const prompt = `German Philologist word analysis: "${word}". Context in parens if provided. 
-  MAPPING: present3rd=trinkt, past=trank, pastParticiple=hat getrunken. DO NOT SWAP.`;
+  const prompt = `German Philologist analysis for: "${word}". Strictly provide conjugation present3rd/past/pastParticiple if it's a verb.`;
 
   try {
     const response = await ai.models.generateContent({
@@ -202,7 +235,7 @@ export async function createTutorChat(masteredWords: string[], history: ChatMess
     model: 'gemini-3-flash-preview',
     history: geminiHistory,
     config: {
-      systemInstruction: `German tutor. Use words: [${wordList}]. Grammar in English.`,
+      systemInstruction: `German tutor. Use words: [${wordList}]. Focus on active usage.`,
     }
   });
 }

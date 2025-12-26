@@ -99,7 +99,6 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
     const raw = item.plural.trim();
     if (raw.toLowerCase() === 'none' || raw === '-') return 'none';
     
-    // If plural already starts with "die", don't add another one
     if (raw.toLowerCase().startsWith('die ')) return raw;
     if (raw.toLowerCase() === 'die') return 'die';
     
@@ -305,15 +304,16 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
           </div>
         )}
 
-        {item.type === 'verb' && item.conjugation && (
+        {/* Restore Verb Conjugation Block */}
+        {item.type === 'verb' && (
           <div className="bg-white/5 p-6 rounded-[32px] border border-white/5 backdrop-blur-sm">
             <h4 className="text-slate-500 text-[10px] font-bold uppercase mb-6 tracking-widest text-center">Verb Konjugation</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 { label: 'Infinitiv', val: item.word, key: 'v1' },
-                { label: 'Präsens', val: item.conjugation.present3rd, key: 'v2' },
-                { label: 'Präteritum', val: item.conjugation.past, key: 'v3' },
-                { label: 'Perfekt', val: item.conjugation.pastParticiple, key: 'v4' }
+                { label: 'Präsens', val: item.conjugation?.present3rd, key: 'v2' },
+                { label: 'Präteritum', val: item.conjugation?.past, key: 'v3' },
+                { label: 'Perfekt', val: item.conjugation?.pastParticiple, key: 'v4' }
               ].map((c) => {
                 const cleanVal = sanitizeConjugation(c.val);
                 return (
