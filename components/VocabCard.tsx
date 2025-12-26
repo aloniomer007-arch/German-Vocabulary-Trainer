@@ -93,6 +93,19 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
     return item.word;
   };
 
+  // Helper to fix "die die" redundancy in plural nouns
+  const getDisplayPlural = () => {
+    if (!item.plural) return 'none';
+    const raw = item.plural.trim();
+    if (raw.toLowerCase() === 'none' || raw === '-') return 'none';
+    
+    // If plural already starts with "die", don't add another one
+    if (raw.toLowerCase().startsWith('die ')) return raw;
+    if (raw.toLowerCase() === 'die') return 'die';
+    
+    return `die ${raw}`;
+  };
+
   const playPronunciation = async (textToSpeak: string, key: string) => {
     if (playingKey || textToSpeak === '—') return;
     
@@ -264,12 +277,12 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
             <div>
               <h4 className="text-slate-500 text-[10px] font-bold uppercase mb-2 tracking-widest">Pluralform</h4>
               <p className="text-white text-xl font-medium">
-                {item.plural.toLowerCase() === 'none' ? 'none' : `die ${item.plural}`}
+                {getDisplayPlural()}
               </p>
             </div>
-            {item.plural.toLowerCase() !== 'none' && (
+            {getDisplayPlural() !== 'none' && (
               <button 
-                onClick={() => playPronunciation(`die ${item.plural}`, 'plural')}
+                onClick={() => playPronunciation(getDisplayPlural(), 'plural')}
                 className={`p-2 rounded-xl transition-all ${playingKey === 'plural' ? 'bg-indigo-500 text-white' : 'bg-slate-800/50 text-slate-500 hover:text-white'}`}
               >
                 {playingKey === 'plural' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Volume2 className="w-4 h-4" />}
