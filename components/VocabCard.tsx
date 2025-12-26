@@ -93,18 +93,6 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
     return item.word;
   };
 
-  // Helper to fix "die die" redundancy in plural nouns
-  const getDisplayPlural = () => {
-    if (!item.plural) return 'none';
-    const raw = item.plural.trim();
-    if (raw.toLowerCase() === 'none' || raw === '-') return 'none';
-    
-    if (raw.toLowerCase().startsWith('die ')) return raw;
-    if (raw.toLowerCase() === 'die') return 'die';
-    
-    return `die ${raw}`;
-  };
-
   const playPronunciation = async (textToSpeak: string, key: string) => {
     if (playingKey || textToSpeak === '—') return;
     
@@ -276,12 +264,12 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
             <div>
               <h4 className="text-slate-500 text-[10px] font-bold uppercase mb-2 tracking-widest">Pluralform</h4>
               <p className="text-white text-xl font-medium">
-                {getDisplayPlural()}
+                {item.plural.toLowerCase() === 'none' ? 'none' : `die ${item.plural}`}
               </p>
             </div>
-            {getDisplayPlural() !== 'none' && (
+            {item.plural.toLowerCase() !== 'none' && (
               <button 
-                onClick={() => playPronunciation(getDisplayPlural(), 'plural')}
+                onClick={() => playPronunciation(`die ${item.plural}`, 'plural')}
                 className={`p-2 rounded-xl transition-all ${playingKey === 'plural' ? 'bg-indigo-500 text-white' : 'bg-slate-800/50 text-slate-500 hover:text-white'}`}
               >
                 {playingKey === 'plural' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Volume2 className="w-4 h-4" />}
@@ -304,16 +292,15 @@ const VocabCard: React.FC<VocabCardProps> = ({ item }) => {
           </div>
         )}
 
-        {/* Restore Verb Conjugation Block */}
-        {item.type === 'verb' && (
+        {item.type === 'verb' && item.conjugation && (
           <div className="bg-white/5 p-6 rounded-[32px] border border-white/5 backdrop-blur-sm">
             <h4 className="text-slate-500 text-[10px] font-bold uppercase mb-6 tracking-widest text-center">Verb Konjugation</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 { label: 'Infinitiv', val: item.word, key: 'v1' },
-                { label: 'Präsens', val: item.conjugation?.present3rd, key: 'v2' },
-                { label: 'Präteritum', val: item.conjugation?.past, key: 'v3' },
-                { label: 'Perfekt', val: item.conjugation?.pastParticiple, key: 'v4' }
+                { label: 'Präsens', val: item.conjugation.present3rd, key: 'v2' },
+                { label: 'Präteritum', val: item.conjugation.past, key: 'v3' },
+                { label: 'Perfekt', val: item.conjugation.pastParticiple, key: 'v4' }
               ].map((c) => {
                 const cleanVal = sanitizeConjugation(c.val);
                 return (

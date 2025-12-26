@@ -18,9 +18,7 @@ import {
   Plus,
   Sparkles,
   Info,
-  AlertCircle,
-  CheckCircle,
-  XCircle
+  AlertCircle
 } from 'lucide-react';
 import { generateSpeech, decodeBase64, decodeAudioData, fetchWordDetails } from '../services/geminiService';
 import VocabCard from './VocabCard';
@@ -53,13 +51,12 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
     if (tab === 'MASTERED') items = progress.masteredItems;
     else if (tab === 'LEARNING') items = progress.learningItems;
     else {
-      // Combine and unique by word string to prevent duplicates
-      const seen = new Set<string>();
-      items = [...progress.masteredItems, ...progress.learningItems].filter(i => {
-        const key = `${i.word}-${i.type}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
+      const combined = [...progress.masteredItems, ...progress.learningItems];
+      const seen = new Set();
+      items = combined.filter(el => {
+        const duplicate = seen.has(el.id);
+        seen.add(el.id);
+        return !duplicate;
       });
     }
 
@@ -106,10 +103,11 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
           };
         });
 
-        // Close modal only if successful (checking current state vs updated state is tricky, 
-        // but the 'exists' check above handles the error path)
-        setNewWordInput('');
-        setIsAddingWord(false);
+        // Close modal only if successful
+        if (!progress.masteredItems.some(i => i.word.toLowerCase() === details.word.toLowerCase() && i.type === details.type)) {
+          setNewWordInput('');
+          setIsAddingWord(false);
+        }
       } else {
         setAddError("Could not connect to Philologist. Please try again.");
       }
@@ -132,13 +130,16 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
   const handleReviewAction = (item: VocabItem, correct: boolean) => {
     setProgress(prev => {
       const isAlreadyInMastered = prev.masteredItems.some(i => i.id === item.id);
+      const isAlreadyInLearning = prev.learningItems.some(i => i.id === item.id);
       const newStats = { ...prev.levelStats };
 
-      // Case 1: Marked as Mastered
       if (correct) {
-        if (isAlreadyInMastered) return prev; // Already there, do nothing
-        
-        // Move from learning to mastered
+        if (isAlreadyInMastered) {
+          return {
+            ...prev,
+            learningItems: prev.learningItems.filter(i => i.id !== item.id)
+          };
+        }
         newStats[item.level] = (newStats[item.level] || 0) + 1;
         return {
           ...prev,
@@ -146,14 +147,17 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
           learningItems: prev.learningItems.filter(i => i.id !== item.id),
           masteredItems: [item, ...prev.masteredItems]
         };
-      } 
-      
-      // Case 2: Marked as Still Learning
-      else {
-        if (!isAlreadyInMastered) return prev; // Already in learning, do nothing
-        
-        // Move from mastered back to learning
-        newStats[item.level] = Math.max(0, (newStats[item.level] || 0) - 1);
+      } else {
+        if (isAlreadyInMastered) {
+          newStats[item.level] = Math.max(0, (newStats[item.level] || 0) - 1);
+        }
+        if (isAlreadyInLearning) {
+          return {
+            ...prev,
+            levelStats: newStats,
+            masteredItems: prev.masteredItems.filter(i => i.id !== item.id)
+          };
+        }
         return {
           ...prev,
           levelStats: newStats,
@@ -222,13 +226,9 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
   const deleteItem = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
     const itemToDelete = [...progress.masteredItems, ...progress.learningItems].find(i => i.id === id);
-    if (!itemToDelete) return;
-
-    if (!window.confirm("Delete this word from your lexicon?")) return;
-
     setProgress(prev => {
       const newStats = { ...prev.levelStats };
-      if (prev.masteredItems.some(i => i.id === id)) {
+      if (itemToDelete && prev.masteredItems.some(i => i.id === id)) {
         newStats[itemToDelete.level] = Math.max(0, (newStats[itemToDelete.level] || 0) - 1);
       }
       return {
@@ -239,59 +239,6 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
       };
     });
   };
-
-  // Render Review Session
-  if (isReviewing && reviewItems.length > 0) {
-    const currentItem = reviewItems[reviewIndex];
-    const progressPercent = ((reviewIndex + 1) / reviewItems.length) * 100;
-
-    return (
-      <div className="fixed inset-0 z-[200] bg-[#020617] flex flex-col p-6 animate-in fade-in duration-300">
-        <header className="flex items-center justify-between mb-8 md:mb-16 max-w-5xl mx-auto w-full">
-          <button onClick={() => setIsReviewing(false)} className="text-slate-500 hover:text-white transition-all p-2 bg-slate-900 rounded-full border border-slate-800">
-            <X className="w-6 h-6" />
-          </button>
-          <div className="flex-1 max-w-md mx-8">
-            <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-              <div className="h-full bg-indigo-500 transition-all duration-500" style={{ width: `${progressPercent}%` }} />
-            </div>
-          </div>
-          <div className="text-right">
-             <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Practice Pool</span>
-             <span className="font-mono text-white font-bold">{reviewIndex + 1} / {reviewItems.length}</span>
-          </div>
-        </header>
-
-        <main className="flex-1 flex flex-col items-center justify-center">
-          <VocabCard item={currentItem} />
-          
-          <div className="mt-12 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 w-full max-w-2xl">
-            <button 
-              onClick={() => handleReviewAction(currentItem, false)} 
-              className="flex-1 flex items-center justify-center space-x-4 px-8 py-5 bg-slate-900 border border-red-500/20 hover:border-red-500/50 text-red-400 rounded-3xl transition-all"
-            >
-              <XCircle className="w-7 h-7" />
-              <div className="text-left">
-                <span className="block font-bold">Still Learning</span>
-                <span className="text-[10px] opacity-60 uppercase tracking-widest font-bold">Keep in Pool</span>
-              </div>
-            </button>
-            
-            <button 
-              onClick={() => handleReviewAction(currentItem, true)} 
-              className="flex-1 flex items-center justify-center space-x-4 px-8 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-3xl shadow-2xl transition-all"
-            >
-              <CheckCircle className="w-7 h-7" />
-              <div className="text-left">
-                <span className="block font-bold">Mastered</span>
-                <span className="text-[10px] opacity-60 uppercase tracking-widest font-bold">Promote word</span>
-              </div>
-            </button>
-          </div>
-        </main>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#020617] text-white flex flex-col relative">
@@ -391,6 +338,7 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
         </div>
       )}
 
+      {/* Main Lexicon Header and List code (remains identical to previous) */}
       <header className="px-6 py-8 border-b border-slate-800 bg-[#020617]/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-8">
@@ -426,7 +374,7 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
              <div className="flex items-center space-x-2 bg-indigo-500/10 px-4 py-1.5 rounded-full border border-indigo-500/20">
                 <BookOpen className="w-4 h-4 text-indigo-400" />
                 <span className="text-xs font-bold text-indigo-300 uppercase tracking-widest">
-                  {list.length} Words in Current View
+                  {list.length} Words in Pool
                 </span>
               </div>
           </div>
