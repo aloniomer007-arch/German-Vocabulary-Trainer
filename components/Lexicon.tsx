@@ -19,7 +19,7 @@ import {
   Sparkles,
   Info,
   AlertCircle,
-  XCircle // Added for practice pool buttons
+  XCircle 
 } from 'lucide-react';
 import { generateSpeech, decodeBase64, decodeAudioData, fetchWordDetails } from '../services/geminiService';
 import VocabCard from './VocabCard';
@@ -104,7 +104,6 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
           };
         });
 
-        // Close modal only if successful
         if (!progress.masteredItems.some(i => i.word.toLowerCase() === details.word.toLowerCase() && i.type === details.type)) {
           setNewWordInput('');
           setIsAddingWord(false);
@@ -130,15 +129,18 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
 
   const handleReviewAction = (item: VocabItem, correct: boolean) => {
     setProgress(prev => {
-      const isAlreadyInMastered = prev.masteredItems.some(i => i.id === item.id);
-      const isAlreadyInLearning = prev.learningItems.some(i => i.id === item.id);
+      const isInMastered = prev.masteredItems.some(i => i.id === item.id);
+      const isInLearning = prev.learningItems.some(i => i.id === item.id);
       const newStats = { ...prev.levelStats };
 
       if (correct) {
-        if (isAlreadyInMastered) {
-          return prev; // No change needed
+        // Move to Mastered if not already there
+        if (isInMastered) return prev;
+        
+        if (!isInMastered) {
+          newStats[item.level] = (newStats[item.level] || 0) + 1;
         }
-        newStats[item.level] = (newStats[item.level] || 0) + 1;
+
         return {
           ...prev,
           levelStats: newStats,
@@ -146,7 +148,8 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
           masteredItems: [item, ...prev.masteredItems]
         };
       } else {
-        if (isAlreadyInMastered) {
+        // Move to Learning if currently in Mastered
+        if (isInMastered) {
           newStats[item.level] = Math.max(0, (newStats[item.level] || 0) - 1);
           return {
             ...prev,
@@ -155,9 +158,8 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
             learningItems: [item, ...prev.learningItems]
           };
         }
-        if (isAlreadyInLearning) {
-          return prev;
-        }
+        // If already in learning or not anywhere, ensure it's in learning
+        if (isInLearning) return prev;
         return {
           ...prev,
           learningItems: [item, ...prev.learningItems]
@@ -165,6 +167,7 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
       }
     });
 
+    // Move to next card or finish session
     if (reviewIndex < reviewItems.length - 1) {
       setReviewIndex(prev => prev + 1);
     } else {
@@ -238,9 +241,12 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
     });
   };
 
-  // UI for the Practice Pool Review Session
   if (isReviewing && reviewItems.length > 0) {
     const currentItem = reviewItems[reviewIndex];
+    if (!currentItem) {
+      setIsReviewing(false);
+      return null;
+    }
     const progressPercent = ((reviewIndex + 1) / reviewItems.length) * 100;
 
     return (
