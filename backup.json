@@ -1,0 +1,2450 @@
+{
+  "version": "3.0",
+  "timestamp": 1767386824690,
+  "progress": {
+    "masteredItems": [
+      {
+        "word": "Geduld",
+        "translation": "patience",
+        "type": "noun",
+        "level": "A2",
+        "example": "Man braucht viel Geduld, um Deutsch zu lernen.",
+        "exampleTranslation": "One needs a lot of patience to learn German.",
+        "gender": "die",
+        "plural": "none",
+        "id": "lxtwnrnml"
+      },
+      {
+        "word": "Atem",
+        "translation": "breath",
+        "type": "noun",
+        "level": "A2",
+        "example": "Er hielt den Atem an.",
+        "exampleTranslation": "He held his breath.",
+        "gender": "der",
+        "plural": "none",
+        "id": "b7v7htaqn"
+      },
+      {
+        "word": "Geschenk",
+        "translation": "gift",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich habe ein Geschenk für dich.",
+        "exampleTranslation": "I have a gift for you.",
+        "gender": "das",
+        "plural": "Geschenke",
+        "id": "2aavrkrwr"
+      },
+      {
+        "word": "ergeben",
+        "translation": "to yield / to result in",
+        "type": "verb",
+        "level": "B2",
+        "example": "Die Untersuchung hat kein klares Ergebnis ergeben.",
+        "exampleTranslation": "The investigation has yielded no clear result.",
+        "conjugation": {
+          "past": "ergab",
+          "pastParticiple": "hat ergeben",
+          "present3rd": "ergibt"
+        },
+        "isIrregular": true,
+        "id": "ikhzzulcl"
+      },
+      {
+        "word": "Guten Rutsch",
+        "translation": "Happy New Year",
+        "type": "phrase",
+        "level": "A1",
+        "example": "Ich wünsche dir einen guten Rutsch ins neue Jahr!",
+        "exampleTranslation": "I wish you a happy New Year!",
+        "id": "216fsfid0"
+      },
+      {
+        "word": "erreichen",
+        "translation": "to reach / to achieve",
+        "type": "verb",
+        "level": "B1",
+        "example": "Wir erreichen den Bahnhof pünktlich.",
+        "exampleTranslation": "We reach the station on time.",
+        "conjugation": {
+          "past": "erreichte",
+          "pastParticiple": "hat erreicht",
+          "present3rd": "erreicht"
+        },
+        "id": "3vt07mkun"
+      },
+      {
+        "word": "Dünger",
+        "translation": "fertilizer",
+        "type": "noun",
+        "level": "B1",
+        "example": "Pflanzen brauchen Dünger, um gut zu wachsen.",
+        "exampleTranslation": "Plants need fertilizer to grow well.",
+        "gender": "der",
+        "plural": "Dünger",
+        "id": "zpsuziobk"
+      },
+      {
+        "word": "wie kommt man darauf",
+        "translation": "how do you get that idea",
+        "type": "phrase",
+        "level": "B1",
+        "example": "Wie kommt man darauf, so etwas zu behaupten?",
+        "exampleTranslation": "How do you get the idea to claim such a thing?",
+        "conjugation": {
+          "past": "kam",
+          "pastParticiple": "ist gekommen",
+          "present3rd": "kommt"
+        },
+        "isIrregular": true,
+        "id": "3irhw9f52"
+      },
+      {
+        "word": "plötzlich",
+        "translation": "suddenly",
+        "type": "adverb",
+        "level": "A2",
+        "example": "Plötzlich fing es an zu regnen.",
+        "exampleTranslation": "Suddenly it started to rain.",
+        "id": "7kp4r9dwd"
+      },
+      {
+        "word": "ohne zu zögern",
+        "translation": "without hesitation",
+        "type": "phrase",
+        "level": "B1",
+        "example": "Er antwortete auf die Frage ohne zu zögern.",
+        "exampleTranslation": "He answered the question without hesitation.",
+        "id": "6kjoivdrk"
+      },
+      {
+        "word": "befragen",
+        "translation": "to interview / to question",
+        "type": "verb",
+        "level": "B1",
+        "example": "Die Polizei muss die Zeugen zu dem Vorfall befragen.",
+        "exampleTranslation": "The police must question the witnesses about the incident.",
+        "conjugation": {
+          "past": "befragte",
+          "pastParticiple": "hat befragt",
+          "present3rd": "befragt"
+        },
+        "id": "3fg8lhecl"
+      },
+      {
+        "word": "Ziel",
+        "translation": "goal",
+        "type": "noun",
+        "level": "A1",
+        "example": "Wir haben unser Ziel erreicht.",
+        "exampleTranslation": "We have reached our goal.",
+        "gender": "das",
+        "plural": "Ziele",
+        "id": "rxop0bz5p"
+      },
+      {
+        "word": "wegen",
+        "translation": "because of",
+        "type": "preposition",
+        "level": "A2",
+        "example": "Wegen des schlechten Wetters wurde das Spiel abgesagt.",
+        "exampleTranslation": "Because of the bad weather, the game was cancelled.",
+        "cases": [
+          "genitive",
+          "dative"
+        ],
+        "id": "ms31uhffa"
+      },
+      {
+        "word": "Sorgfalt",
+        "translation": "care",
+        "type": "noun",
+        "level": "B2",
+        "example": "Er erledigte die Arbeit mit großer Sorgfalt.",
+        "exampleTranslation": "He completed the work with great care.",
+        "gender": "die",
+        "plural": "none",
+        "id": "q3q21jvbg"
+      },
+      {
+        "word": "tun",
+        "translation": "to do",
+        "type": "verb",
+        "level": "A1",
+        "example": "Was kann ich für dich tun?",
+        "exampleTranslation": "What can I do for you?",
+        "conjugation": {
+          "past": "tat",
+          "pastParticiple": "hat getan",
+          "present3rd": "tut"
+        },
+        "isIrregular": true,
+        "id": "xzfcommek"
+      },
+      {
+        "word": "verrichten",
+        "translation": "to perform",
+        "type": "verb",
+        "level": "B2",
+        "example": "Er verrichtete seine Arbeit mit großer Sorgfalt.",
+        "exampleTranslation": "He performed his work with great care.",
+        "conjugation": {
+          "past": "verrichtete",
+          "pastParticiple": "hat verrichtet",
+          "present3rd": "verrichtet"
+        },
+        "id": "cvg2t0xox"
+      },
+      {
+        "word": "Witz",
+        "translation": "joke",
+        "type": "noun",
+        "level": "A1",
+        "example": "Er erzählte einen lustigen Witz.",
+        "exampleTranslation": "He told a funny joke.",
+        "gender": "der",
+        "plural": "Witze",
+        "id": "ccm23eua5"
+      },
+      {
+        "word": "witzig",
+        "translation": "funny",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Mein Bruder ist sehr witzig.",
+        "exampleTranslation": "My brother is very funny.",
+        "id": "xmi08m56f"
+      },
+      {
+        "word": "lustig",
+        "translation": "funny",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Der Film war sehr lustig.",
+        "exampleTranslation": "The movie was very funny.",
+        "id": "ax1eycdwq"
+      },
+      {
+        "word": "umständlich",
+        "translation": "cumbersome",
+        "type": "adjective",
+        "level": "B2",
+        "example": "Das Verfahren ist sehr umständlich.",
+        "exampleTranslation": "The procedure is very cumbersome.",
+        "id": "y02d4h7gm"
+      },
+      {
+        "word": "komisch",
+        "translation": "strange, funny",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Das ist ein komischer Zufall.",
+        "exampleTranslation": "That is a strange coincidence.",
+        "id": "vqlre5ajb"
+      },
+      {
+        "word": "verstehen",
+        "translation": "to understand",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich verstehe die Frage nicht.",
+        "exampleTranslation": "I don't understand the question.",
+        "conjugation": {
+          "past": "verstand",
+          "pastParticiple": "hat verstanden",
+          "present3rd": "versteht"
+        },
+        "isIrregular": true,
+        "id": "3r37a0ek4"
+      },
+      {
+        "word": "von",
+        "translation": "from, of, by",
+        "type": "preposition",
+        "level": "A1",
+        "example": "Ich komme gerade von der Arbeit.",
+        "exampleTranslation": "I am just coming from work.",
+        "cases": [
+          "dative"
+        ],
+        "id": "xz0p9l2of"
+      },
+      {
+        "word": "Baum",
+        "translation": "tree",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Baum steht im Garten.",
+        "exampleTranslation": "The tree stands in the garden.",
+        "gender": "der",
+        "plural": "Bäume",
+        "id": "p3u9mahef"
+      },
+      {
+        "word": "essen",
+        "translation": "to eat",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich esse einen Apfel.",
+        "exampleTranslation": "I am eating an apple.",
+        "conjugation": {
+          "past": "aß",
+          "pastParticiple": "hat gegessen",
+          "present3rd": "isst"
+        },
+        "isIrregular": true,
+        "id": "o5ws7sh7q"
+      },
+      {
+        "word": "Haus",
+        "translation": "house",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Haus ist groß.",
+        "exampleTranslation": "The house is big.",
+        "gender": "das",
+        "plural": "Häuser",
+        "id": "t3i4pzqtk"
+      },
+      {
+        "word": "trinken",
+        "translation": "to drink",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich trinke Wasser.",
+        "exampleTranslation": "I drink water.",
+        "conjugation": {
+          "past": "trank",
+          "pastParticiple": "hat getrunken",
+          "present3rd": "trinkt"
+        },
+        "isIrregular": true,
+        "id": "rovgw1488"
+      },
+      {
+        "word": "Apfel",
+        "translation": "apple",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Apfel ist rot.",
+        "exampleTranslation": "The apple is red.",
+        "gender": "der",
+        "plural": "Äpfel",
+        "id": "gcmu4edcf"
+      },
+      {
+        "word": "gut",
+        "translation": "good",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Das ist ein gutes Buch.",
+        "exampleTranslation": "This is a good book.",
+        "id": "d2mzbvtze"
+      },
+      {
+        "word": "kommen",
+        "translation": "to come",
+        "type": "verb",
+        "level": "A1",
+        "example": "Woher kommst du?",
+        "exampleTranslation": "Where do you come from?",
+        "conjugation": {
+          "past": "kam",
+          "pastParticiple": "ist gekommen",
+          "present3rd": "kommt"
+        },
+        "isIrregular": true,
+        "id": "e6zhkyeg2"
+      },
+      {
+        "word": "Name",
+        "translation": "name",
+        "type": "noun",
+        "level": "A1",
+        "example": "Mein Name ist Peter.",
+        "exampleTranslation": "My name is Peter.",
+        "gender": "der",
+        "plural": "Namen",
+        "id": "fxep83267"
+      },
+      {
+        "word": "klein",
+        "translation": "small",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Die Katze ist klein.",
+        "exampleTranslation": "The cat is small.",
+        "id": "z8488ay9d"
+      },
+      {
+        "word": "schreiben",
+        "translation": "to write",
+        "type": "verb",
+        "level": "A1",
+        "example": "Er schreibt einen Brief.",
+        "exampleTranslation": "He is writing a letter.",
+        "conjugation": {
+          "past": "schrieb",
+          "pastParticiple": "hat geschrieben",
+          "present3rd": "schreibt"
+        },
+        "isIrregular": true,
+        "id": "unc28o64u"
+      },
+      {
+        "word": "Tisch",
+        "translation": "table",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Tisch ist aus Holz.",
+        "exampleTranslation": "The table is made of wood.",
+        "gender": "der",
+        "plural": "Tische",
+        "id": "uummfjbej"
+      },
+      {
+        "word": "schön",
+        "translation": "beautiful",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Das Wetter ist schön.",
+        "exampleTranslation": "The weather is beautiful.",
+        "id": "phey5ldj4"
+      },
+      {
+        "word": "gehen",
+        "translation": "to go",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich gehe nach Hause.",
+        "exampleTranslation": "I am going home.",
+        "conjugation": {
+          "past": "ging",
+          "pastParticiple": "ist gegangen",
+          "present3rd": "geht"
+        },
+        "isIrregular": true,
+        "id": "ofrc4e4v2"
+      },
+      {
+        "word": "Buch",
+        "translation": "book",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich lese ein Buch.",
+        "exampleTranslation": "I am reading a book.",
+        "gender": "das",
+        "plural": "Bücher",
+        "id": "u3m0b23wa"
+      },
+      {
+        "word": "neu",
+        "translation": "new",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Mein Auto ist neu.",
+        "exampleTranslation": "My car is new.",
+        "id": "3071n0b4z"
+      },
+      {
+        "word": "lernen",
+        "translation": "to learn",
+        "type": "verb",
+        "level": "A1",
+        "example": "Wir lernen Deutsch.",
+        "exampleTranslation": "We are learning German.",
+        "conjugation": {
+          "past": "lernte",
+          "pastParticiple": "hat gelernt",
+          "present3rd": "lernt"
+        },
+        "isIrregular": false,
+        "id": "z7me5wanu"
+      },
+      {
+        "word": "Kind",
+        "translation": "child",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Kind spielt im Garten.",
+        "exampleTranslation": "The child plays in the garden.",
+        "gender": "das",
+        "plural": "Kinder",
+        "id": "wwy4vjx42"
+      },
+      {
+        "word": "alt",
+        "translation": "old",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Der Mann ist sehr alt.",
+        "exampleTranslation": "The man is very old.",
+        "id": "hpptgdj24"
+      },
+      {
+        "word": "sehen",
+        "translation": "to see",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich sehe den film.",
+        "exampleTranslation": "I am watching the movie.",
+        "conjugation": {
+          "past": "sah",
+          "pastParticiple": "hat gesehen",
+          "present3rd": "sieht"
+        },
+        "isIrregular": true,
+        "id": "tnwo8tbcb"
+      },
+      {
+        "word": "Frau",
+        "translation": "woman / wife",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Frau arbeitet hier.",
+        "exampleTranslation": "The woman works here.",
+        "gender": "die",
+        "plural": "Frauen",
+        "id": "ge3tqvozx"
+      },
+      {
+        "word": "heute",
+        "translation": "today",
+        "type": "adverb",
+        "level": "A1",
+        "example": "Heute ist Montag.",
+        "exampleTranslation": "Today is Monday.",
+        "id": "qidvo8tdq"
+      },
+      {
+        "word": "machen",
+        "translation": "to do / make",
+        "type": "verb",
+        "level": "A1",
+        "example": "Was machst du?",
+        "exampleTranslation": "What are you doing?",
+        "conjugation": {
+          "past": "machte",
+          "pastParticiple": "hat gemacht",
+          "present3rd": "macht"
+        },
+        "isIrregular": false,
+        "id": "olhl0v6im"
+      },
+      {
+        "word": "Brot",
+        "translation": "bread",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Brot schmeckt gut.",
+        "exampleTranslation": "The bread tastes good.",
+        "gender": "das",
+        "plural": "Brote",
+        "id": "cqaqrj6b9"
+      },
+      {
+        "word": "groß",
+        "translation": "big / tall",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Die Stadt ist groß.",
+        "exampleTranslation": "The city is big.",
+        "id": "hlnw5gak8"
+      },
+      {
+        "word": "hörer",
+        "translation": "to hear / listen",
+        "type": "verb",
+        "level": "A1",
+        "example": "Sie hört Musik.",
+        "exampleTranslation": "She is listening to music.",
+        "conjugation": {
+          "past": "hörte",
+          "pastParticiple": "hat gehört",
+          "present3rd": "hört"
+        },
+        "isIrregular": false,
+        "id": "zsbixzwfp"
+      },
+      {
+        "word": "Schule",
+        "translation": "school",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Schule fängt an.",
+        "exampleTranslation": "The school is starting.",
+        "gender": "die",
+        "plural": "Schulen",
+        "id": "tibw3pbvq"
+      },
+      {
+        "word": "jetzt",
+        "translation": "now",
+        "type": "adverb",
+        "level": "A1",
+        "example": "Ich muss jetzt gehen.",
+        "exampleTranslation": "I have to go now.",
+        "id": "ylgy3ylez"
+      },
+      {
+        "word": "sprechen",
+        "translation": "to speak",
+        "type": "verb",
+        "level": "A1",
+        "example": "Sprechen Sie Deutsch?",
+        "exampleTranslation": "Do you speak German?",
+        "conjugation": {
+          "past": "sprach",
+          "pastParticiple": "hat gesprochen",
+          "present3rd": "spricht"
+        },
+        "isIrregular": true,
+        "id": "45bzj2zik"
+      },
+      {
+        "word": "Wasser",
+        "translation": "water",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ein Glas Wasser, bitte.",
+        "exampleTranslation": "A glass of water, please.",
+        "gender": "das",
+        "plural": "Wässer",
+        "id": "znglw18dl"
+      },
+      {
+        "word": "schnell",
+        "translation": "fast",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Das Auto fährt schnell.",
+        "exampleTranslation": "The car drives fast.",
+        "id": "x4ae7lt9x"
+      },
+      {
+        "word": "lesen",
+        "translation": "to read",
+        "type": "verb",
+        "level": "A1",
+        "example": "Er liest die Zeitung.",
+        "exampleTranslation": "He is reading the newspaper.",
+        "conjugation": {
+          "past": "las",
+          "pastParticiple": "hat gelesen",
+          "present3rd": "liest"
+        },
+        "isIrregular": true,
+        "id": "9cmgbgo0q"
+      },
+      {
+        "word": "Freund",
+        "translation": "friend",
+        "type": "noun",
+        "level": "A1",
+        "example": "Mein Freund kommt morgen.",
+        "exampleTranslation": "My friend is coming tomorrow.",
+        "gender": "der",
+        "plural": "Freunde",
+        "id": "y8x7o2jhv"
+      },
+      {
+        "word": "langsam",
+        "translation": "slow",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Bitte sprechen Sie langsam.",
+        "exampleTranslation": "Please speak slowly.",
+        "id": "sonud7vy4"
+      },
+      {
+        "word": "wohnen",
+        "translation": "to live / reside",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich wohne in Berlin.",
+        "exampleTranslation": "I live in Berlin.",
+        "conjugation": {
+          "past": "wohnte",
+          "pastParticiple": "hat gewohnt",
+          "present3rd": "wohnt"
+        },
+        "isIrregular": false,
+        "id": "5z5y4ls03"
+      },
+      {
+        "word": "Stadt",
+        "translation": "city",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Stadt ist sehr laut.",
+        "exampleTranslation": "The city is very loud.",
+        "gender": "die",
+        "plural": "Städte",
+        "id": "dtthdmo18"
+      },
+      {
+        "word": "kalt",
+        "translation": "cold",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Mir ist kalt.",
+        "exampleTranslation": "I am cold.",
+        "id": "svrlree8w"
+      },
+      {
+        "word": "kaufen",
+        "translation": "to buy",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich kaufe ein Ticket.",
+        "exampleTranslation": "I am buying a ticket.",
+        "conjugation": {
+          "past": "kaufte",
+          "pastParticiple": "hat gekauft",
+          "present3rd": "kauft"
+        },
+        "isIrregular": false,
+        "id": "fq1ocut5v"
+      },
+      {
+        "word": "Auto",
+        "translation": "car",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Auto ist blau.",
+        "exampleTranslation": "The car is blue.",
+        "gender": "das",
+        "plural": "Autos",
+        "id": "4e5kizg9b"
+      },
+      {
+        "word": "warm",
+        "translation": "warm",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Es ist heute warm.",
+        "exampleTranslation": "It is warm today.",
+        "id": "6c3m3e4ig"
+      },
+      {
+        "word": "suchen",
+        "translation": "to search / look for",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich suche meinen Schlüssel.",
+        "exampleTranslation": "I am looking for my key.",
+        "conjugation": {
+          "past": "suchte",
+          "pastParticiple": "hat gesucht",
+          "present3rd": "sucht"
+        },
+        "isIrregular": false,
+        "id": "pa7tzq6y2"
+      },
+      {
+        "word": "Tag",
+        "translation": "day",
+        "type": "noun",
+        "level": "A1",
+        "example": "Guten Tag!",
+        "exampleTranslation": "Good day!",
+        "gender": "der",
+        "plural": "Tage",
+        "id": "fcittujwg"
+      },
+      {
+        "word": "hell",
+        "translation": "bright",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Das Zimmer ist hell.",
+        "exampleTranslation": "The room is bright.",
+        "id": "t4hy8flhw"
+      },
+      {
+        "word": "fragen",
+        "translation": "to ask",
+        "type": "verb",
+        "level": "A1",
+        "example": "Darf ich etwas fragen?",
+        "exampleTranslation": "May I ask something?",
+        "conjugation": {
+          "past": "fragte",
+          "pastParticiple": "hat gefragt",
+          "present3rd": "fragt"
+        },
+        "isIrregular": false,
+        "id": "ja4a8wci1"
+      },
+      {
+        "word": "Mutter",
+        "translation": "mother",
+        "type": "noun",
+        "level": "A1",
+        "example": "Meine Mutter kocht.",
+        "exampleTranslation": "My mother is cooking.",
+        "gender": "die",
+        "plural": "Mütter",
+        "id": "ugcmho35l"
+      },
+      {
+        "word": "dunkel",
+        "translation": "dark",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Es ist draußen dunkel.",
+        "exampleTranslation": "It is dark outside.",
+        "id": "dzxlfr3zj"
+      },
+      {
+        "word": "spielen",
+        "translation": "to play",
+        "type": "verb",
+        "level": "A1",
+        "example": "Die Kinder spielen Fußball.",
+        "exampleTranslation": "The children are playing soccer.",
+        "conjugation": {
+          "past": "spielte",
+          "pastParticiple": "hat gespielt",
+          "present3rd": "spielt"
+        },
+        "isIrregular": false,
+        "id": "mb4uthi1o"
+      },
+      {
+        "word": "Hund",
+        "translation": "dog",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Hund bellt.",
+        "exampleTranslation": "The dog barks.",
+        "gender": "der",
+        "plural": "Hunde",
+        "id": "txv9l0efj"
+      },
+      {
+        "word": "traurig",
+        "translation": "sad",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Warum bist du traurig?",
+        "exampleTranslation": "Why are you sad?",
+        "id": "tzlvf0tpp"
+      },
+      {
+        "word": "antworten",
+        "translation": "to answer",
+        "type": "verb",
+        "level": "A1",
+        "example": "Er antwortet nicht.",
+        "exampleTranslation": "He does not answer.",
+        "conjugation": {
+          "past": "antwortete",
+          "pastParticiple": "hat geantwortet",
+          "present3rd": "antwortet"
+        },
+        "isIrregular": false,
+        "id": "trhne3uwh"
+      },
+      {
+        "word": "Blume",
+        "translation": "flower",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Blume duftet.",
+        "exampleTranslation": "The flower smells good.",
+        "gender": "die",
+        "plural": "Blumen",
+        "id": "0ut7u794r"
+      },
+      {
+        "word": "glücklich",
+        "translation": "happy",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Ich bin glücklich.",
+        "exampleTranslation": "I am happy.",
+        "id": "a9nm9bx0c"
+      },
+      {
+        "word": "helfen",
+        "translation": "to help",
+        "type": "verb",
+        "level": "A1",
+        "example": "Kannst du mir helfen?",
+        "exampleTranslation": "Can you help me?",
+        "conjugation": {
+          "past": "half",
+          "pastParticiple": "hat geholfen",
+          "present3rd": "hilft"
+        },
+        "isIrregular": true,
+        "id": "2afuzad21"
+      },
+      {
+        "word": "der Mann",
+        "translation": "the man",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Mann ist hier.",
+        "exampleTranslation": "The man is here.",
+        "gender": "der",
+        "plural": "die Männer",
+        "id": "y8i618a0b"
+      },
+      {
+        "word": "die Nacht",
+        "translation": "the night",
+        "type": "noun",
+        "level": "A1",
+        "example": "Gute Nacht.",
+        "exampleTranslation": "Good night.",
+        "gender": "die",
+        "plural": "die Nächte",
+        "id": "5fybw3mlh"
+      },
+      {
+        "word": "das Zimmer",
+        "translation": "the room",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Zimmer ist frei.",
+        "exampleTranslation": "The room is free.",
+        "gender": "das",
+        "plural": "die Zimmer",
+        "id": "opfr0f6uk"
+      },
+      {
+        "word": "kochen",
+        "translation": "to cook",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich koche Suppe.",
+        "exampleTranslation": "I am cooking soup.",
+        "conjugation": {
+          "past": "kochte",
+          "pastParticiple": "hat gekocht",
+          "present3rd": "kocht"
+        },
+        "isIrregular": false,
+        "id": "gw0ncfuvy"
+      },
+      {
+        "word": "tragen",
+        "translation": "to wear/carry",
+        "type": "verb",
+        "level": "A1",
+        "example": "Er trägt einen Hut.",
+        "exampleTranslation": "He is wearing a hat.",
+        "conjugation": {
+          "past": "trug",
+          "pastParticiple": "hat getragen",
+          "present3rd": "trägt"
+        },
+        "isIrregular": true,
+        "id": "zbndn2lxy"
+      },
+      {
+        "word": "schlafen",
+        "translation": "to sleep",
+        "type": "verb",
+        "level": "A1",
+        "example": "Das kind schläft.",
+        "exampleTranslation": "The child is sleeping.",
+        "conjugation": {
+          "past": "schlief",
+          "pastParticiple": "hat geschlafen",
+          "present3rd": "schläft"
+        },
+        "isIrregular": true,
+        "id": "1leufel44"
+      },
+      {
+        "word": "der Kaffee",
+        "translation": "the coffee",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich trinke Kaffee.",
+        "exampleTranslation": "I drink coffee.",
+        "gender": "der",
+        "plural": "die Kaffees",
+        "id": "fwc4zx6tr"
+      },
+      {
+        "word": "die Milch",
+        "translation": "the milk",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Milch ist kalt.",
+        "exampleTranslation": "The milk is cold.",
+        "gender": "die",
+        "plural": "none",
+        "id": "t1xfkbr16"
+      },
+      {
+        "word": "das Geld",
+        "translation": "the money",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich habe kein Geld.",
+        "exampleTranslation": "I have no money.",
+        "gender": "das",
+        "plural": "none",
+        "id": "1yrkzaiy1"
+      },
+      {
+        "word": "billig",
+        "translation": "cheap",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Das ist billig.",
+        "exampleTranslation": "That is cheap.",
+        "id": "r8uyr44ji"
+      },
+      {
+        "word": "teuer",
+        "translation": "expensive",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Das Auto ist teuer.",
+        "exampleTranslation": "The car is expensive.",
+        "id": "jftgecwxq"
+      },
+      {
+        "word": "der Vater",
+        "translation": "the father",
+        "type": "noun",
+        "level": "A1",
+        "example": "Mein Vater ist nett.",
+        "exampleTranslation": "My father is nice.",
+        "gender": "der",
+        "plural": "die Väter",
+        "id": "8rtpcbs1r"
+      },
+      {
+        "word": "die Schwester",
+        "translation": "the sister",
+        "type": "noun",
+        "level": "A1",
+        "example": "Hast du eine Schwester?",
+        "exampleTranslation": "Do you have a sister?",
+        "gender": "die",
+        "plural": "die Schwestern",
+        "id": "lon4iubz6"
+      },
+      {
+        "word": "der Bruder",
+        "translation": "the brother",
+        "type": "noun",
+        "level": "A1",
+        "example": "Sein Bruder lernt Deutsch.",
+        "exampleTranslation": "His brother is learning German.",
+        "gender": "der",
+        "plural": "die Brüder",
+        "id": "81fdsc4qg"
+      },
+      {
+        "word": "das Fenster",
+        "translation": "the window",
+        "type": "noun",
+        "level": "A1",
+        "example": "Mach das Fenster zu!",
+        "exampleTranslation": "Close the window!",
+        "gender": "das",
+        "plural": "die Fenster",
+        "id": "659kjcegy"
+      },
+      {
+        "word": "die Tür",
+        "translation": "the door",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Tür ist offen.",
+        "exampleTranslation": "The door is open.",
+        "gender": "die",
+        "plural": "die Türen",
+        "id": "ga5lock0w"
+      },
+      {
+        "word": "sitzen",
+        "translation": "to sit",
+        "type": "verb",
+        "level": "A1",
+        "example": "Wir sitzen hier.",
+        "exampleTranslation": "We are sitting here.",
+        "conjugation": {
+          "past": "saß",
+          "pastParticiple": "hat gesessen",
+          "present3rd": "sitzt"
+        },
+        "isIrregular": true,
+        "id": "5k7uriv5g"
+      },
+      {
+        "word": "stehen",
+        "translation": "to stand",
+        "type": "verb",
+        "level": "A1",
+        "example": "Er steht dort.",
+        "exampleTranslation": "He is standing there.",
+        "conjugation": {
+          "past": "stand",
+          "pastParticiple": "hat gestanden",
+          "present3rd": "steht"
+        },
+        "isIrregular": true,
+        "id": "32vjx7o06"
+      },
+      {
+        "word": "der Stuhl",
+        "translation": "the chair",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Stuhl ist alt.",
+        "exampleTranslation": "The chair is old.",
+        "gender": "der",
+        "plural": "die Stühle",
+        "id": "flny2o9rs"
+      },
+      {
+        "word": "die Tasche",
+        "translation": "the bag",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das ist meine Tasche.",
+        "exampleTranslation": "This is my bag.",
+        "gender": "die",
+        "plural": "die Taschen",
+        "id": "r3a04yv0r"
+      },
+      {
+        "word": "das Handy",
+        "translation": "the mobile phone",
+        "type": "noun",
+        "level": "A1",
+        "example": "Wo ist mein Handy?",
+        "exampleTranslation": "Where is my mobile phone?",
+        "gender": "das",
+        "plural": "die Handys",
+        "id": "y540p6vy5"
+      },
+      {
+        "word": "schwimmen",
+        "translation": "to swim",
+        "type": "verb",
+        "level": "A1",
+        "example": "Sie schwimmt gern.",
+        "exampleTranslation": "She likes to swim.",
+        "conjugation": {
+          "past": "schwamm",
+          "pastParticiple": "ist geschwommen",
+          "present3rd": "schwimmt"
+        },
+        "isIrregular": true,
+        "id": "3orf3chyl"
+      },
+      {
+        "word": "fliegen",
+        "translation": "to fly",
+        "type": "verb",
+        "level": "A1",
+        "example": "Wir fliegen nach Berlin.",
+        "exampleTranslation": "We are flying to Berlin.",
+        "conjugation": {
+          "past": "flog",
+          "pastParticiple": "ist geflogen",
+          "present3rd": "fliegt"
+        },
+        "isIrregular": true,
+        "id": "kag77p4uw"
+      },
+      {
+        "word": "reisen",
+        "translation": "to travel",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich reise oft.",
+        "exampleTranslation": "I travel often.",
+        "conjugation": {
+          "past": "reiste",
+          "pastParticiple": "ist gereist",
+          "present3rd": "reist"
+        },
+        "isIrregular": false,
+        "id": "ql7q8bkyo"
+      },
+      {
+        "word": "das Meer",
+        "translation": "the sea",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Meer ist blau.",
+        "exampleTranslation": "The sea is blue.",
+        "gender": "das",
+        "plural": "die Meere",
+        "id": "bdzhsaz5j"
+      },
+      {
+        "word": "der Berg",
+        "translation": "the mountain",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Berg ist hoch.",
+        "exampleTranslation": "The mountain is high.",
+        "gender": "der",
+        "plural": "die Berge",
+        "id": "yh0184hrx"
+      },
+      {
+        "word": "hoch",
+        "translation": "high",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Das Haus ist hoch.",
+        "exampleTranslation": "The house is high.",
+        "id": "w1qe3kp3v"
+      },
+      {
+        "word": "kurz",
+        "translation": "short",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Der Weg ist kurz.",
+        "exampleTranslation": "The way is short.",
+        "id": "l4jz84b81"
+      },
+      {
+        "word": "lang",
+        "translation": "long",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Der film ist lang.",
+        "exampleTranslation": "The film is long.",
+        "id": "qc0yx3fx9"
+      },
+      {
+        "word": "morgen",
+        "translation": "tomorrow",
+        "type": "adverb",
+        "level": "A1",
+        "example": "Ich komme morgen.",
+        "exampleTranslation": "I am coming tomorrow.",
+        "id": "b50u9i6ar"
+      },
+      {
+        "word": "der Abend",
+        "translation": "the evening",
+        "type": "noun",
+        "level": "A1",
+        "example": "Am Abend bin ich müde.",
+        "exampleTranslation": "In the evening I am tired.",
+        "gender": "der",
+        "plural": "die Abende",
+        "id": "ud4sahhe2"
+      },
+      {
+        "word": "müde",
+        "translation": "tired",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Bist du müde?",
+        "exampleTranslation": "Are you tired?",
+        "id": "gxc0nm5sw"
+      },
+      {
+        "word": "hungrig",
+        "translation": "hungry",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Ich bin hungrig.",
+        "exampleTranslation": "I am hungry.",
+        "id": "833i0t2yf"
+      },
+      {
+        "word": "die Uhr",
+        "translation": "the clock/hour",
+        "type": "noun",
+        "level": "A1",
+        "example": "Wie viel Uhr ist es?",
+        "exampleTranslation": "What time is it?",
+        "gender": "die",
+        "plural": "die Uhren",
+        "id": "0mprgi6rr"
+      },
+      {
+        "word": "die Zeit",
+        "translation": "the time",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich habe keine Zeit.",
+        "exampleTranslation": "I have no time.",
+        "gender": "die",
+        "plural": "die Zeiten",
+        "id": "ic2f6snt3"
+      },
+      {
+        "word": "arbeiten",
+        "translation": "to work",
+        "type": "verb",
+        "level": "A1",
+        "example": "Er arbeitet viel.",
+        "exampleTranslation": "He works a lot.",
+        "conjugation": {
+          "past": "arbeitete",
+          "pastParticiple": "hat gearbeitet",
+          "present3rd": "arbeitet"
+        },
+        "isIrregular": false,
+        "id": "qnrkkacig"
+      },
+      {
+        "word": "der Job",
+        "translation": "the job",
+        "type": "noun",
+        "level": "A1",
+        "example": "Mein Job ist gut.",
+        "exampleTranslation": "My job is good.",
+        "gender": "der",
+        "plural": "die Jobs",
+        "id": "1yq680rfh"
+      },
+      {
+        "word": "das Frühstück",
+        "translation": "the breakfast",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Frühstück ist fertig.",
+        "exampleTranslation": "The breakfast is ready.",
+        "gender": "das",
+        "plural": "die Frühstücke",
+        "id": "84swb03lp"
+      },
+      {
+        "word": "fertig",
+        "translation": "finished/ready",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Ich bin fertig.",
+        "exampleTranslation": "I am finished.",
+        "id": "7xc0afoxg"
+      },
+      {
+        "word": "links",
+        "translation": "left",
+        "type": "adverb",
+        "level": "A1",
+        "example": "Gehen Sie links.",
+        "exampleTranslation": "Go left.",
+        "id": "czppy0kdk"
+      },
+      {
+        "word": "rechts",
+        "translation": "right",
+        "type": "adverb",
+        "level": "A1",
+        "example": "Biegen Sie rechts ab.",
+        "exampleTranslation": "Turn right.",
+        "id": "55e2n3lxs"
+      },
+      {
+        "word": "geradeaus",
+        "translation": "straight ahead",
+        "type": "adverb",
+        "level": "A1",
+        "example": "Fahren Sie geradeaus.",
+        "exampleTranslation": "Drive straight ahead.",
+        "id": "2rpznepsn"
+      },
+      {
+        "word": "der Zug",
+        "translation": "the train",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Zug kommt pünktlich.",
+        "exampleTranslation": "The train arrives on time.",
+        "gender": "der",
+        "plural": "die Züge",
+        "id": "i60oqnr0g"
+      },
+      {
+        "word": "pünktlich",
+        "translation": "punctual",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Sei pünktlich!",
+        "exampleTranslation": "Be punctual!",
+        "id": "eju2hw69q"
+      },
+      {
+        "word": "die Fahrkarte",
+        "translation": "the ticket",
+        "type": "noun",
+        "level": "A1",
+        "example": "Hier ist meine Fahrkarte.",
+        "exampleTranslation": "Here is my ticket.",
+        "gender": "die",
+        "plural": "die Fahrkarten",
+        "id": "co5gptfer"
+      },
+      {
+        "word": "bezahlen",
+        "translation": "to pay",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich bezahle bar.",
+        "exampleTranslation": "I pay cash.",
+        "conjugation": {
+          "past": "bezahlte",
+          "pastParticiple": "hat bezahlt",
+          "present3rd": "bezahlt"
+        },
+        "isIrregular": false,
+        "id": "f2ghskwy4"
+      },
+      {
+        "word": "bar",
+        "translation": "cash",
+        "type": "adverb",
+        "level": "A1",
+        "example": "Kann ich bar zahlen?",
+        "exampleTranslation": "Can I pay cash?",
+        "id": "5eq823jid"
+      },
+      {
+        "word": "der Schlüssel",
+        "translation": "the key",
+        "type": "noun",
+        "level": "A1",
+        "example": "Wo ist der Schlüssel?",
+        "exampleTranslation": "Where is the key.",
+        "gender": "der",
+        "plural": "die Schlüssel",
+        "id": "vl3gglwim"
+      },
+      {
+        "word": "das Licht",
+        "translation": "the light",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Licht ist an.",
+        "exampleTranslation": "The light is on.",
+        "gender": "das",
+        "plural": "die Lichter",
+        "id": "7v3v0ifzy"
+      },
+      {
+        "word": "anrufen",
+        "translation": "to call (phone)",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich rufe dich an.",
+        "exampleTranslation": "I'll call you.",
+        "conjugation": {
+          "past": "rief an",
+          "pastParticiple": "hat angerufen",
+          "present3rd": "ruft an"
+        },
+        "isIrregular": true,
+        "id": "qzrd4pt90"
+      },
+      {
+        "word": "Banane",
+        "translation": "banana",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Banane ist gelb.",
+        "exampleTranslation": "The banana is yellow.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "Bananen",
+        "isIrregular": false,
+        "id": "p7eirnshr"
+      },
+      {
+        "word": "Fahrrad",
+        "translation": "bicycle",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Fahrrad ist da.",
+        "exampleTranslation": "The bicycle is there.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "das",
+        "plural": "Fahrräder",
+        "isIrregular": false,
+        "id": "lceutk9ep"
+      },
+      {
+        "word": "Computer",
+        "translation": "computer",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Computer ist kaputt.",
+        "exampleTranslation": "The computer is broken.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "Computer",
+        "isIrregular": false,
+        "id": "kqw9pb2ok"
+      },
+      {
+        "word": "Katze",
+        "translation": "cat",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Katze rennt.",
+        "exampleTranslation": "The cat runs.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "Katzen",
+        "isIrregular": false,
+        "id": "vrxlp6fvk"
+      },
+      {
+        "word": "Saft",
+        "translation": "juice",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich mag Saft.",
+        "exampleTranslation": "I like juice.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "Säfte",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "7q65v43xe"
+      },
+      {
+        "word": "Zeitung",
+        "translation": "newspaper",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Zeitung ist interessant.",
+        "exampleTranslation": "The newspaper is interesting.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "Zeitungen",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "9cgnxmnms"
+      },
+      {
+        "word": "tanzen",
+        "translation": "to dance",
+        "type": "verb",
+        "level": "A1",
+        "example": "Wir tanzen gerne.",
+        "exampleTranslation": "We like to dance.",
+        "conjugation": {
+          "present3rd": "tanzt",
+          "past": "tanzte",
+          "pastParticiple": "getanzt"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [],
+        "id": "d01ulgebx"
+      },
+      {
+        "word": "Jacke",
+        "translation": "jacket",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Jacke ist blau.",
+        "exampleTranslation": "The jacket is blue.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "Jacken",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "nmj2dvlh9"
+      },
+      {
+        "word": "Käse",
+        "translation": "cheese",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Käse ist lecker.",
+        "exampleTranslation": "The cheese is delicious.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "xwvjig6v4"
+      },
+      {
+        "word": "backen",
+        "translation": "to bake",
+        "type": "verb",
+        "level": "A1",
+        "example": "Sie backt einen Kuchen.",
+        "exampleTranslation": "She is baking a cake.",
+        "conjugation": {
+          "present3rd": "bäckt",
+          "past": "backte",
+          "pastParticiple": "gebacken"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": true,
+        "cases": [
+          "Akkusativ"
+        ],
+        "id": "26uxdkwzp"
+      },
+      {
+        "word": "Bild",
+        "translation": "picture",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Bild ist dort.",
+        "exampleTranslation": "The picture is there.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "das",
+        "plural": "Bilder",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "26dtd4l7k"
+      },
+      {
+        "word": "Bleistift",
+        "translation": "pencil",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich brauche einen Bleistift.",
+        "exampleTranslation": "I need a pencil.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "Bleistifte",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "h62g5668k"
+      },
+      {
+        "word": "putzen",
+        "translation": "to clean",
+        "type": "verb",
+        "level": "A1",
+        "example": "Er putzt die Küche.",
+        "exampleTranslation": "He cleans the kitchen.",
+        "conjugation": {
+          "present3rd": "putzt",
+          "past": "putzte",
+          "pastParticiple": "geputzt"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [
+          "Akkusativ"
+        ],
+        "id": "gssf8mmph"
+      },
+      {
+        "word": "Lampe",
+        "translation": "lamp",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Lampe ist aus.",
+        "exampleTranslation": "The lamp is off.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "Lampen",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "awzti39hu"
+      },
+      {
+        "word": "Löffel",
+        "translation": "spoon",
+        "type": "noun",
+        "level": "A1",
+        "example": "Wo ist mein Löffel?",
+        "exampleTranslation": "Where is my spoon?",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "Löffel",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "539nwv1bp"
+      },
+      {
+        "word": "Ei",
+        "translation": "egg",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Ei ist weiß.",
+        "exampleTranslation": "The egg is white.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "das",
+        "plural": "Eier",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "a2ih4quo5"
+      },
+      {
+        "word": "singen",
+        "translation": "to sing",
+        "type": "verb",
+        "level": "A1",
+        "example": "Wir singen ein Lied.",
+        "exampleTranslation": "We are singing a song.",
+        "conjugation": {
+          "present3rd": "singt",
+          "past": "sang",
+          "pastParticiple": "gesungen"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": true,
+        "cases": [
+          "Akkusativ"
+        ],
+        "id": "90klnx2bi"
+      },
+      {
+        "word": "Gabel",
+        "translation": "fork",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Gabel ist hier.",
+        "exampleTranslation": "The fork is here.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "Gabeln",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "489rss4pu"
+      },
+      {
+        "word": "Messer",
+        "translation": "knife",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Messer ist scharf.",
+        "exampleTranslation": "The knife is sharp.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "das",
+        "plural": "Messer",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ",
+          "Dativ",
+          "Genitiv"
+        ],
+        "id": "vbs27hgnx"
+      },
+      {
+        "word": "Kartoffel",
+        "translation": "potato",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich habe eine Kartoffel.",
+        "exampleTranslation": "I have a potato.",
+        "conjugation": {
+          "present3rd": "",
+          "past": "",
+          "pastParticiple": ""
+        },
+        "gender": "die",
+        "plural": "Kartoffeln",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ"
+        ],
+        "id": "2chag7cru"
+      },
+      {
+        "word": "Gemüse",
+        "translation": "vegetable",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich mag Gemüse.",
+        "exampleTranslation": "I like vegetables.",
+        "conjugation": {
+          "present3rd": "",
+          "past": "",
+          "pastParticiple": ""
+        },
+        "gender": "das",
+        "plural": "Gemüse",
+        "isIrregular": false,
+        "cases": [
+          "Nominativ",
+          "Akkusativ"
+        ],
+        "id": "iyf8698lw"
+      },
+      {
+        "word": "der Ausweis",
+        "translation": "ID card",
+        "type": "noun",
+        "level": "A1",
+        "example": "Haben Sie Ihren Ausweis dabei?",
+        "exampleTranslation": "Do you have your ID card with you?",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "die Ausweise",
+        "isIrregular": false,
+        "cases": [
+          "nominative",
+          "accusative"
+        ],
+        "id": "h4a0f2h9d"
+      },
+      {
+        "word": "die Tasse",
+        "translation": "cup",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich möchte eine Tasse Tee.",
+        "exampleTranslation": "I would like a cup of tea.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "die Tassen",
+        "isIrregular": false,
+        "cases": [
+          "nominative",
+          "accusative"
+        ],
+        "id": "nni0j3je5"
+      },
+      {
+        "word": "die Brille",
+        "translation": "glasses",
+        "type": "noun",
+        "level": "A1",
+        "example": "Wo ist meine Brille?",
+        "exampleTranslation": "Where are my glasses?",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "die Brillen",
+        "isIrregular": false,
+        "cases": [
+          "nominative"
+        ],
+        "id": "da99e7h3a"
+      },
+      {
+        "word": "die Adresse",
+        "translation": "address",
+        "type": "noun",
+        "level": "A1",
+        "example": "Wie ist deine Adresse?",
+        "exampleTranslation": "What is your address?",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "die Adressen",
+        "isIrregular": false,
+        "cases": [
+          "nominative"
+        ],
+        "id": "tsjh6y7ne"
+      },
+      {
+        "word": "der Termin",
+        "translation": "appointment",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich habe einen Termin beim Arzt.",
+        "exampleTranslation": "I have an appointment at the doctor.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "die Termine",
+        "isIrregular": false,
+        "cases": [
+          "nominative",
+          "accusative"
+        ],
+        "id": "bj8vyawvq"
+      },
+      {
+        "word": "brauchen",
+        "translation": "to need",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich brauche Hilfe.",
+        "exampleTranslation": "I need help.",
+        "conjugation": {
+          "present3rd": "braucht",
+          "past": "brauchte",
+          "pastParticiple": "gebraucht"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [
+          "accusative"
+        ],
+        "id": "a3q37yyz6"
+      },
+      {
+        "word": "bestellen",
+        "translation": "to order",
+        "type": "verb",
+        "level": "A1",
+        "example": "Wir bestellen eine Pizza.",
+        "exampleTranslation": "We are ordering a pizza.",
+        "conjugation": {
+          "present3rd": "bestellt",
+          "past": "bestellte",
+          "pastParticiple": "bestellt"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [
+          "accusative"
+        ],
+        "id": "7k80c96lp"
+      },
+      {
+        "word": "duschen",
+        "translation": "to shower",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich dusche am Morgen.",
+        "exampleTranslation": "I shower in the morning.",
+        "conjugation": {
+          "present3rd": "duscht",
+          "past": "duschte",
+          "pastParticiple": "geduscht"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [],
+        "id": "f1t3e988t"
+      },
+      {
+        "word": "buchstabieren",
+        "translation": "to spell",
+        "type": "verb",
+        "level": "A1",
+        "example": "Können Sie das bitte buchstabieren?",
+        "exampleTranslation": "Can you please spell that?",
+        "conjugation": {
+          "present3rd": "buchstabiert",
+          "past": "buchstabierte",
+          "pastParticiple": "buchstabiert"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [
+          "accusative"
+        ],
+        "id": "dpxoukyyw"
+      },
+      {
+        "word": "lecker",
+        "translation": "delicious",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Der Kuchen ist sehr lecker.",
+        "exampleTranslation": "The cake is very delicious.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [],
+        "id": "f7sblfw4o"
+      },
+      {
+        "word": "kaputt",
+        "translation": "broken",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Mein Radio ist kaputt.",
+        "exampleTranslation": "My radio is broken.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [],
+        "id": "vnw06y3mc"
+      },
+      {
+        "word": "frei",
+        "translation": "free / vacant",
+        "type": "adjective",
+        "level": "A1",
+        "example": "Ist dieser Platz noch frei?",
+        "exampleTranslation": "Is this seat still free?",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [],
+        "id": "itqzoy959"
+      },
+      {
+        "word": "schließen",
+        "translation": "to close",
+        "type": "verb",
+        "level": "A1",
+        "example": "Bitte schließen Sie die Tür.",
+        "exampleTranslation": "Please close the door.",
+        "conjugation": {
+          "present3rd": "schließt",
+          "past": "schloss",
+          "pastParticiple": "geschlossen"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": true,
+        "cases": [
+          "accusative"
+        ],
+        "id": "4q8ri525i"
+      },
+      {
+        "word": "besuchen",
+        "translation": "to visit",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich besuche meine Oma.",
+        "exampleTranslation": "I am visiting my grandma.",
+        "conjugation": {
+          "present3rd": "besucht",
+          "past": "besuchte",
+          "pastParticiple": "besucht"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "cases": [
+          "accusative"
+        ],
+        "id": "euv86wjjn"
+      },
+      {
+        "word": "der Urlaub",
+        "translation": "vacation",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich mache im Sommer Urlaub.",
+        "exampleTranslation": "I am taking a vacation in the summer.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "die Urlaube",
+        "isIrregular": false,
+        "cases": [
+          "nominative",
+          "accusative"
+        ],
+        "id": "74zgxsfvf"
+      },
+      {
+        "word": "Student",
+        "translation": "student",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Student ist hier.",
+        "exampleTranslation": "The student is here.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "Studenten",
+        "isIrregular": false,
+        "id": "14j7ppxs5"
+      },
+      {
+        "word": "Lehrer",
+        "translation": "teacher",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Lehrer erklärt die Aufgabe.",
+        "exampleTranslation": "The teacher explains the task.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "Lehrer",
+        "isIrregular": false,
+        "id": "6ad3p7fkv"
+      },
+      {
+        "word": "Bus",
+        "translation": "bus",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Bus ist gelb.",
+        "exampleTranslation": "The bus is yellow.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "Busse",
+        "isIrregular": false,
+        "id": "nw6y2ua1b"
+      },
+      {
+        "word": "Reis",
+        "translation": "rice",
+        "type": "noun",
+        "level": "A1",
+        "example": "Ich mag Reis.",
+        "exampleTranslation": "I like rice.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "none",
+        "isIrregular": false,
+        "id": "1tmj8ge2d"
+      },
+      {
+        "word": "Orange",
+        "translation": "orange",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Orange ist süß.",
+        "exampleTranslation": "The orange is sweet.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "Orangen",
+        "isIrregular": false,
+        "id": "tn6079c92"
+      },
+      {
+        "word": "malen",
+        "translation": "to paint",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich male die Sonne.",
+        "exampleTranslation": "I am painting the sun.",
+        "conjugation": {
+          "present3rd": "malt",
+          "past": "malte",
+          "pastParticiple": "gemalt"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "id": "d9hengf59"
+      },
+      {
+        "word": "Regenschirm",
+        "translation": "umbrella",
+        "type": "noun",
+        "level": "A1",
+        "example": "Hier ist ein Regenschirm.",
+        "exampleTranslation": "Here is an umbrella.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "Regenschirme",
+        "isIrregular": false,
+        "id": "79oqnxvlv"
+      },
+      {
+        "word": "Tee",
+        "translation": "tea",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Tee ist heiß.",
+        "exampleTranslation": "The tea is hot.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "Tees",
+        "isIrregular": false,
+        "id": "diob74frz"
+      },
+      {
+        "word": "Seife",
+        "translation": "soap",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Seife ist weiß.",
+        "exampleTranslation": "The soap is white.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "die Seifen",
+        "isIrregular": false,
+        "id": "tyxz0zytw"
+      },
+      {
+        "word": "lachen",
+        "translation": "to laugh",
+        "type": "verb",
+        "level": "A1",
+        "example": "Er lacht viel.",
+        "exampleTranslation": "He laughs a lot.",
+        "conjugation": {
+          "present3rd": "lacht",
+          "past": "lachte",
+          "pastParticiple": "gelacht"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": false,
+        "id": "wrpvi0ky0"
+      },
+      {
+        "word": "Rock",
+        "translation": "skirt",
+        "type": "noun",
+        "level": "A1",
+        "example": "Der Rock ist rot.",
+        "exampleTranslation": "The skirt is red.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "der",
+        "plural": "die Röcke",
+        "isIrregular": false,
+        "id": "oae38hh2t"
+      },
+      {
+        "word": "Heft",
+        "translation": "notebook",
+        "type": "noun",
+        "level": "A1",
+        "example": "Das Heft ist blau.",
+        "exampleTranslation": "The notebook is blue.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "das",
+        "plural": "die Hefte",
+        "isIrregular": false,
+        "id": "oqvcsllfd"
+      },
+      {
+        "word": "Sonne",
+        "translation": "sun",
+        "type": "noun",
+        "level": "A1",
+        "example": "Die Sonne ist heiß.",
+        "exampleTranslation": "The sun is hot.",
+        "conjugation": {
+          "present3rd": "none",
+          "past": "none",
+          "pastParticiple": "none"
+        },
+        "gender": "die",
+        "plural": "Sonnen",
+        "isIrregular": false,
+        "cases": [
+          "nominative"
+        ],
+        "id": "zv95nrquc"
+      },
+      {
+        "word": "waschen",
+        "translation": "to wash",
+        "type": "verb",
+        "level": "A1",
+        "example": "Ich wasche mein Gesicht.",
+        "exampleTranslation": "I wash my face.",
+        "conjugation": {
+          "present3rd": "wäscht",
+          "past": "wusch",
+          "pastParticiple": "gewaschen"
+        },
+        "gender": "none",
+        "plural": "none",
+        "isIrregular": true,
+        "cases": [
+          "accusative"
+        ],
+        "id": "slgoimmno"
+      }
+    ],
+    "learningItems": [],
+    "levelStats": {
+      "A1": 162,
+      "A2": 4,
+      "B1": 5,
+      "B2": 4,
+      "C1": 0,
+      "C2": 0
+    }
+  },
+  "chatHistory": [
+    {
+      "role": "model",
+      "text": "Hallo! Lass uns neu anfangen. Wie kann ich dir heute mit deinem Deutsch helfen?",
+      "timestamp": 1767029254431
+    }
+  ]
+}

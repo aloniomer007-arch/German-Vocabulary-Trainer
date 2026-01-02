@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { VocabItem, Level, ChatMessage } from "../types";
 
@@ -9,47 +8,42 @@ function repairTruncatedJsonArray(jsonStr: string): string {
   const trimmed = jsonStr.trim();
   if (trimmed.endsWith(']')) return trimmed;
   
-  // Find the last complete object closing brace before the truncation
   const lastBraceIndex = trimmed.lastIndexOf('}');
   if (lastBraceIndex === -1) return '[]';
   
-  // Slice to the last brace and close the array
   return trimmed.substring(0, lastBraceIndex + 1) + ']';
 }
 
 /**
  * Helper to fetch a single batch chunk from Gemini.
+ * Optimized to handle smaller, more reliable counts.
  */
 async function fetchBatchChunk(level: Level, count: number, excludeWords: string[]): Promise<VocabItem[]> {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const cefrGuidelines: Record<Level, string> = {
-    A1: "Focus on absolute basics. Words like 'Haus', 'Trinken'.",
-    A2: "Elementary level. Topics: routines, simple past events.",
-    B1: "Intermediate level. Narrating experiences.",
-    B2: "Upper-intermediate level. Abstract concepts.",
-    C1: "Advanced academic/professional language.",
-    C2: "Mastery level. Highly specific synonyms."
+    A1: "Absolute basics. Focus on daily objects, common actions, and simple greetings.",
+    A2: "Elementary. Focus on routines, past events, and personal environment.",
+    B1: "Intermediate. Narrating experiences, opinions, and abstract plans.",
+    B2: "Upper-intermediate. Complex topics, technical discussions, and nuance.",
+    C1: "Advanced academic/professional. Fine shades of meaning and specific fields.",
+    C2: "Mastery level. Full professional fluency and idiomatic precision."
   };
 
-  const exclusionString = excludeWords.length > 0 
-    ? `EXCLUSION: Do not repeat these words: ${excludeWords.slice(-200).join(', ')}.`
+  const recentExclusions = excludeWords.slice(-150);
+  const exclusionString = recentExclusions.length > 0 
+    ? `IMPORTANT: Do not include any of these words: ${recentExclusions.join(', ')}.`
     : "";
 
-  const prompt = `Act as a German Philologist. Generate EXACTLY ${count} UNIQUE German vocab items for level ${level}.
+  const prompt = `Act as a German Philologist. Generate EXACTLY ${count} UNIQUE German vocab items for CEFR level ${level}.
   
-  STRICT VERB CONJUGATION MAPPING:
-  - "present3rd": MUST be the 3rd person singular present (er/sie/es). Example: 'trinkt'.
-  - "past": MUST be the Präteritum (Simple Past). Example: 'trank'.
-  - "pastParticiple": MUST be the Perfekt. Example: 'hat getrunken'.
-  
-  CRITICAL RULES:
-  1. Use ONLY the word string. No markdown (_) or labels inside values.
-  2. For NOUNS, include "plural".
-  3. Ensure NO duplicates in this response.
-
+  LEVEL CONTEXT: ${cefrGuidelines[level]}
   ${exclusionString}
-  Level: ${cefrGuidelines[level]}`;
+
+  STRICT REQUIREMENTS:
+  1. For VERBS: Provide 'conjugation' with 'present3rd', 'past', and 'pastParticiple'.
+  2. For NOUNS: Provide 'gender' ('der'/'die'/'das') and 'plural'.
+  3. Return results as a valid JSON array. Ensure no duplicates of the excluded words.`;
 
   try {
     const response = await ai.models.generateContent({
@@ -57,13 +51,12 @@ async function fetchBatchChunk(level: Level, count: number, excludeWords: string
       contents: prompt,
       config: {
         responseMimeType: "application/json",
-        thinkingConfig: { thinkingBudget: 0 },
         maxOutputTokens: 8192,
         responseSchema: {
           type: Type.ARRAY,
           items: {
             type: Type.OBJECT,
-            required: ['word', 'translation', 'type', 'level', 'example', 'exampleTranslation'],
+            required: ['word', 'translation', 'type', 'level', 'example', 'exampleTranslation', 'conjugation', 'gender', 'plural', 'isIrregular'],
             properties: {
               word: { type: Type.STRING },
               translation: { type: Type.STRING },
@@ -76,6 +69,7 @@ async function fetchBatchChunk(level: Level, count: number, excludeWords: string
               isIrregular: { type: Type.BOOLEAN },
               conjugation: {
                 type: Type.OBJECT,
+                required: ['present3rd', 'past', 'pastParticiple'],
                 properties: {
                   present3rd: { type: Type.STRING },
                   past: { type: Type.STRING },
@@ -89,8 +83,12 @@ async function fetchBatchChunk(level: Level, count: number, excludeWords: string
       },
     });
 
-    let text = response.text || '[]';
-    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    let text = response.text?.trim() || '[]';
+    
+    if (!text.startsWith('[')) {
+      const start = text.indexOf('[');
+      if (start !== -1) text = text.substring(start);
+    }
     
     if (!text.endsWith(']')) {
       text = repairTruncatedJsonArray(text);
@@ -101,7 +99,7 @@ async function fetchBatchChunk(level: Level, count: number, excludeWords: string
 
     return data.map((item: any) => ({
       ...item,
-      id: Math.random().toString(36).substr(2, 9)
+      id: Math.random().toString(36).substring(2, 11)
     }));
   } catch (e) {
     console.error("Gemini Chunk Fetch Error:", e);
@@ -110,40 +108,35 @@ async function fetchBatchChunk(level: Level, count: number, excludeWords: string
 }
 
 /**
- * Main fetcher with Refill Strategy to guarantee count.
+ * Guarantees the requested word count by breaking large requests into smaller chunks.
  */
 export async function fetchQuizBatch(level: Level, count: number = 25, excludeWords: string[] = []): Promise<VocabItem[]> {
   let allItems: VocabItem[] = [];
-  const maxRetries = 3;
+  const maxTotalAttempts = 20; 
   let attempts = 0;
   
   const currentExclusions = [...excludeWords];
 
-  while (allItems.length < count && attempts < maxRetries) {
+  while (allItems.length < count && attempts < maxTotalAttempts) {
     attempts++;
-    const remaining = count - allItems.length;
-    // Emphasize larger chunks if we are far behind
-    const nextChunk = await fetchBatchChunk(level, remaining, currentExclusions);
-    
-    if (nextChunk.length === 0) break; // Stuck
-
-    allItems = [...allItems, ...nextChunk];
-    // Add new items to exclusions for next potential loop
-    nextChunk.forEach(item => currentExclusions.push(item.word));
-    
-    // Safety slice in case of overflow
-    if (allItems.length > count) {
-      allItems = allItems.slice(0, count);
-    }
+    const remainingCount = count - allItems.length;
+    const chunkSize = Math.min(remainingCount, 15);
+    const nextChunk = await fetchBatchChunk(level, chunkSize, currentExclusions);
+    if (nextChunk.length === 0) continue; 
+    const uniqueFromChunk = nextChunk.filter(item => {
+      const isDuplicate = currentExclusions.some(ex => ex.toLowerCase() === item.word.toLowerCase());
+      return !isDuplicate;
+    });
+    if (uniqueFromChunk.length === 0 && attempts > 10) break;
+    allItems = [...allItems, ...uniqueFromChunk];
+    uniqueFromChunk.forEach(item => currentExclusions.push(item.word));
   }
-
-  return allItems;
+  return allItems.slice(0, count);
 }
 
 export async function fetchWordDetails(word: string): Promise<(VocabItem & { exists: boolean }) | null> {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  const prompt = `German Philologist word analysis: "${word}". Context in parens if provided. 
-  MAPPING: present3rd=trinkt, past=trank, pastParticiple=hat getrunken. DO NOT SWAP.`;
+  const prompt = `German Philologist word analysis: "${word}". Provide grammatical details including conjugation if it is a verb.`;
 
   try {
     const response = await ai.models.generateContent({
@@ -153,7 +146,7 @@ export async function fetchWordDetails(word: string): Promise<(VocabItem & { exi
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,
-          required: ['word', 'translation', 'type', 'level', 'example', 'exampleTranslation', 'exists'],
+          required: ['word', 'translation', 'type', 'level', 'example', 'exampleTranslation', 'exists', 'conjugation'],
           properties: {
             exists: { type: Type.BOOLEAN },
             word: { type: Type.STRING },
@@ -167,6 +160,7 @@ export async function fetchWordDetails(word: string): Promise<(VocabItem & { exi
             isIrregular: { type: Type.BOOLEAN },
             conjugation: {
               type: Type.OBJECT,
+              required: ['present3rd', 'past', 'pastParticiple'],
               properties: {
                 present3rd: { type: Type.STRING },
                 past: { type: Type.STRING },
@@ -182,7 +176,7 @@ export async function fetchWordDetails(word: string): Promise<(VocabItem & { exi
     const data = JSON.parse(response.text || '{}');
     return {
       ...data,
-      id: Math.random().toString(36).substr(2, 9)
+      id: Math.random().toString(36).substring(2, 11)
     };
   } catch (e) {
     console.error("Gemini Single Word Detail Error:", e);
@@ -202,7 +196,8 @@ export async function createTutorChat(masteredWords: string[], history: ChatMess
     model: 'gemini-3-flash-preview',
     history: geminiHistory,
     config: {
-      systemInstruction: `German tutor. Use words: [${wordList}]. Grammar in English.`,
+      systemInstruction: `You are a German language tutor. Your student has mastered these words: [${wordList}]. Try to use them in your conversation. Correct their grammar gently in English if they make mistakes. Encourage them to keep speaking in German.`,
+      thinkingConfig: { thinkingBudget: 4000 }
     }
   });
 }
@@ -212,7 +207,7 @@ export async function generateSpeech(text: string): Promise<string | null> {
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-preview-tts",
-      contents: [{ parts: [{ text: `German: ${text}` }] }],
+      contents: [{ parts: [{ text: `Please speak this German text clearly: ${text}` }] }],
       config: {
         responseModalities: [Modality.AUDIO],
         speechConfig: {

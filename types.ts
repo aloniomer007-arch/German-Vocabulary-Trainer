@@ -1,4 +1,3 @@
-
 export type Level = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
 export type WordType = 'noun' | 'verb' | 'preposition' | 'adjective' | 'adverb' | 'phrase';
 export type Gender = 'der' | 'die' | 'das' | 'none';
@@ -56,21 +55,13 @@ export interface ChatMessage {
   timestamp: number;
 }
 
-// Added missing chess-related types to fix cross-component import errors
-export type PieceType = 'p' | 'n' | 'b' | 'r' | 'q' | 'k';
-export type Color = 'w' | 'b';
-
+// Fix: Added GameState and AIAnalysis types to support chess-related components like Sidebar.tsx
 export interface GameState {
-  fen: string;
-  turn: Color;
+  turn: 'w' | 'b';
   isCheck: boolean;
-  isCheckmate: boolean;
   history: string[];
 }
 
 export interface AIAnalysis {
   evaluation: string;
-  bestMove?: string;
-  suggestion: string;
-  explanation: string;
 }

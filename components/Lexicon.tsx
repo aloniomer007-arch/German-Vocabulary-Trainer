@@ -1,6 +1,6 @@
 
-import React, { useState, useMemo, useEffect } from 'react';
-import { VocabItem, UserProgress, Level } from '../types';
+import React, { useState, useMemo, useRef } from 'react';
+import { VocabItem, UserProgress } from '../types';
 import { 
   ChevronLeft, 
   Search, 
@@ -19,10 +19,13 @@ import {
   Sparkles,
   Info,
   AlertCircle,
-  XCircle 
+  XCircle,
+  Download
 } from 'lucide-react';
 import { generateSpeech, decodeBase64, decodeAudioData, fetchWordDetails } from '../services/geminiService';
 import VocabCard from './VocabCard';
+
+const CHAT_STORAGE_KEY = 'deutsch_pro_v3_chat_history';
 
 interface LexiconProps {
   progress: UserProgress;
@@ -67,6 +70,26 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
       i.translation.toLowerCase().includes(search.toLowerCase())
     );
   }, [tab, progress.masteredItems, progress.learningItems, search]);
+
+  const handleExport = () => {
+    const chatHistory = localStorage.getItem(CHAT_STORAGE_KEY);
+    const data = {
+      version: '3.0',
+      timestamp: Date.now(),
+      progress: progress,
+      chatHistory: chatHistory ? JSON.parse(chatHistory) : []
+    };
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `backup.json`; // Named specifically to encourage replacement in project root
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   const handleAddWord = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,7 +157,6 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
       const newStats = { ...prev.levelStats };
 
       if (correct) {
-        // Move to Mastered if not already there
         if (isInMastered) return prev;
         
         if (!isInMastered) {
@@ -148,7 +170,6 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
           masteredItems: [item, ...prev.masteredItems]
         };
       } else {
-        // Move to Learning if currently in Mastered
         if (isInMastered) {
           newStats[item.level] = Math.max(0, (newStats[item.level] || 0) - 1);
           return {
@@ -158,7 +179,6 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
             learningItems: [item, ...prev.learningItems]
           };
         }
-        // If already in learning or not anywhere, ensure it's in learning
         if (isInLearning) return prev;
         return {
           ...prev,
@@ -167,7 +187,6 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
       }
     });
 
-    // Move to next card or finish session
     if (reviewIndex < reviewItems.length - 1) {
       setReviewIndex(prev => prev + 1);
     } else {
@@ -362,8 +381,7 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
                 <div className="bg-indigo-500/5 border border-indigo-500/20 p-4 rounded-2xl flex items-start space-x-3">
                   <Info className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
                   <p className="text-[11px] text-slate-400 leading-relaxed">
-                    <span className="font-bold text-indigo-300">Tip:</span> For ambiguous words, add context in parentheses. 
-                    Example: <code className="text-white">Essen (food)</code> vs <code className="text-white">Essen (to eat)</code>.
+                    <span className="font-bold text-indigo-300">Tip:</span> Your changes are cached locally but can be manually backed up to your project.
                   </p>
                 </div>
               </div>
@@ -393,13 +411,22 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
 
       <header className="px-6 py-8 border-b border-slate-800 bg-[#020617]/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <button onClick={onBack} className="flex items-center space-x-2 text-slate-400 hover:text-white transition-all group">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <button onClick={onBack} className="flex items-center space-x-2 text-slate-400 hover:text-white transition-all group self-start">
               <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
               <span className="font-bold uppercase tracking-widest text-xs">Back to Dashboard</span>
             </button>
             
-            <div className="flex items-center space-x-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center space-x-2 mr-2">
+                <button 
+                  onClick={handleExport}
+                  title="Export Current DB"
+                  className="p-2.5 bg-slate-900 border border-slate-800 hover:border-slate-600 text-slate-400 hover:text-white rounded-xl transition-all"
+                >
+                  <Download className="w-4 h-4" />
+                </button>
+              </div>
               <button 
                 onClick={() => setIsAddingWord(true)}
                 className="flex items-center space-x-2 bg-slate-900 border border-slate-800 hover:border-indigo-500/50 text-slate-200 px-6 py-2 rounded-xl font-bold text-sm transition-all"
@@ -421,7 +448,7 @@ const Lexicon: React.FC<LexiconProps> = ({ progress, setProgress, onBack }) => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
              <div>
                 <h2 className="text-4xl font-serif font-bold mb-2">My Lexicon</h2>
-                <p className="text-slate-500 text-sm">Reviewing your personal vocabulary collection. Click any word to see its full flashcard.</p>
+                <p className="text-slate-500 text-sm">Reviewing your personal vocabulary collection. Data synced with master backup.json.</p>
              </div>
              <div className="flex items-center space-x-2 bg-indigo-500/10 px-4 py-1.5 rounded-full border border-indigo-500/20">
                 <BookOpen className="w-4 h-4 text-indigo-400" />
